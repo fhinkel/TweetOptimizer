@@ -18,15 +18,16 @@ app.get('/tweet', function (req, res) {
 io.on('connection', function (socket) {
     console.log('a user connected');
 
+    var emitRelatedTags = function (error, tags) {
+        if (error) {
+            console.log("error receiving related tags: " + error);
+        }
+        socket.emit('related tags', tags);
+    };
+
     socket.on('tweet', function (msg) {
         console.log('we received a tweet for analysis: ' + msg);
-        getMetric(msg, function (error, metric) {
-            if (error) {
-                console.log("error receiving metric: " + error);
-            }
-            socket.emit('tweet analysis', metric);
-        });
-
+        getMetric(msg, emitRelatedTags);
         getBunteHeadline(msg, function(error, headline) {
            if (error) {
                console.log("error pulling Article from Bunte");
