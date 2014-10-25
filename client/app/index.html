@@ -1,6 +1,7 @@
 <!doctype html>
 <html class="no-js">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>opendatahackday</title>
     <meta name="description" content="">
@@ -18,100 +19,111 @@
     <!-- endbuild -->
 
     <style>
-      body {
-        margin:0;
-        padding:0;
-      }
-      header {
-      }
-      .optimization {
-        padding: 20px;
-        margin: 20px 0;
-        border: 1px solid #eee;
-        border-left-width: 5px;
-        border-radius: 3px;
-      }
-      .optimization-hashtag {
-        border-left-color: #d9534f;
-      }
-      .optimization-synonym {
-        border-left-color: #f0ad4e;
-      }
-      .optimization-social {
-        border-left-color: #5bc0de;
-      }
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            position: fixed;
+        }
+        .main {
+            padding-top: 100px;
+        }
+        .optimization {
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #eee;
+            border-left-width: 5px;
+            border-radius: 3px;
+        }
+        .optimization-hashtag {
+            border-left-color: #d9534f;
+        }
+        .optimization-synonym {
+            border-left-color: #f0ad4e;
+        }
+        .optimization-social {
+            border-left-color: #5bc0de;
+        }
     </style>
 
-  </head>
-  <body>
-    <header>
-      <div class="container">
-        <h3 class="text-muted">Tweetify</h3>
-        <h4>Macht deine Tweets sexier!</h4>
-      </div>
+</head>
+
+<body>
+    <header class="expanded">
+        <div class="container">
+            <h3 class="text-muted">Tweetify</h3>
+            <h4>Macht deine Tweets sexier!</h4>
+        </div>
     </header>
-      <div class="container">
+    <header class="small" style="display: none;">
+        <div class="container">
+            <h4>(logo) Tweetify</h4>
+        </div>
+        </div>
+    </header>
+    <div class="container main">
         <div class="form-group">
-          <textarea class="form-control" id="input" rows="3"></textarea>
-          <div class="row">
-            <div class="col-xs-6">
-              <p>
-                <span id="character-count">0</span>/140
-              </p>
+            <textarea class="form-control" id="input" rows="3"></textarea>
+            <div class="row">
+                <div class="col-xs-6">
+                    <p>
+                        <span id="character-count">0</span>/140
+                    </p>
+                </div>
+                <div class="col-xs-6 text-right">
+                    <button type="" class="btn btn-primary">copy to clipboard</button>
+                </div>
             </div>
-            <div class="col-xs-6 text-right">
-              <button type="" class="btn btn-primary">copy to clipboard</button>
-            </div>
-          </div>
-          <p class="alert alert-success" role="alert">
-            n optimizations
-          </p>
+            <p class="alert alert-success" role="alert">
+                n optimizations
+            </p>
         </div>
         <div class="row">
-          <div class="col-sm-6">
-            <div class="optimization optimization-hashtag">
-              <div class="row">
-                <div class="col-xs-9">
-                  #hans -> #peter
+            <div class="col-sm-6">
+                <div class="optimization optimization-hashtag">
+                    <div class="row">
+                        <div class="col-xs-9">
+                            #hans -> #peter
+                        </div>
+                        <div class="col-xs-3">
+                            <button class="btn btn-primary pull-right">
+                                <span class="glyphicon glyphicon-ok"></span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-xs-3">
-                  <button class="btn btn-primary pull-right">
-                    <span class="glyphicon glyphicon-ok"></span>
-                  </button>
-                </div>
-              </div>
             </div>
-          </div>
-          <div class="col-sm-6">
-            <div class="optimization optimization-synonym">
-              <div class="row">
-                <div class="col-xs-9">
-                  hackday -> hackathon
+            <div class="col-sm-6">
+                <div class="optimization optimization-synonym">
+                    <div class="row">
+                        <div class="col-xs-9">
+                            hackday -> hackathon
+                        </div>
+                        <div class="col-xs-3">
+                            <button class="btn btn-primary pull-right">
+                                <span class="glyphicon glyphicon-ok"></span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-xs-3">
-                  <button class="btn btn-primary pull-right">
-                    <span class="glyphicon glyphicon-ok"></span>
-                  </button>
-                </div>
-              </div>
             </div>
-          </div>
-          <div class="col-sm-6">
-            <div class="optimization optimization-social">
-              <div class="row">
-                <div class="col-xs-9">
-                  Deine Follower verwenden #opdendata
+            <div class="col-sm-6">
+                <div class="optimization optimization-social">
+                    <div class="row">
+                        <div class="col-xs-9">
+                            Deine Follower verwenden #opdendata
+                        </div>
+                        <div class="col-xs-3">
+                            <button class="btn btn-primary pull-right">
+                                <span class="glyphicon glyphicon-ok"></span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-xs-3">
-                  <button class="btn btn-primary pull-right">
-                    <span class="glyphicon glyphicon-ok"></span>
-                  </button>
-                </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
 
 
 
@@ -143,4 +155,5 @@
     <script src="scripts/main.js"></script>
     <!-- endbuild -->
 </body>
+
 </html>

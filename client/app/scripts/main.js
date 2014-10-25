@@ -25,3 +25,15 @@ $(document).ready(function () {
     });
 });
 
+window.addEventListener('scroll', function(e) {
+    var offset = window.pageYOffset;
+    var $headerExpanded = $('header.expanded');
+    var $headerSmall = $('header.small');
+    if (offset > 40) {
+        $headerExpanded.hide();
+        $headerSmall.show();
+    } else {
+        $headerExpanded.show();
+        $headerSmall.hide();
+    }
+});
