@@ -79,39 +79,15 @@
             </p>
         </div>
         <div id="feed-container" class="row">
-            <div class="col-sm-6">
-                <div class="optimization optimization-hashtag">
-                    <div class="row">
-                        <div class="col-xs-9">
-                            #hans -> #peter
-                        </div>
-                        <div class="col-xs-3">
-                            <button class="btn btn-primary pull-right">
-                                <span class="glyphicon glyphicon-ok"></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="optimization optimization-synonym">
-                    <div class="row">
-                        <div class="col-xs-9">
-                            hackday -> hackathon
-                        </div>
-                        <div class="col-xs-3">
-                            <button class="btn btn-primary pull-right">
-                                <span class="glyphicon glyphicon-ok"></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+        </div>
+
+        <script id="template" type="text/x-handlebars-template">
             <div class="col-sm-6">
                 <div class="optimization optimization-social">
                     <div class="row">
                         <div class="col-xs-9">
-                            Deine Follower verwenden #opdendata
+                            {{originalHashtag}} -> {{newHashtag}}
                         </div>
                         <div class="col-xs-3">
                             <button class="btn btn-primary pull-right">
@@ -121,13 +97,14 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </script>
 
 
         <!-- build:js scripts/vendor.js -->
         <!-- bower:js -->
         <script src="bower_components/jquery/dist/jquery.js"></script>
         <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="bower_components/handlebars/handlebars.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 
