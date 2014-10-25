@@ -171,14 +171,13 @@ def process_hashtag(query):
                     if match not in processed_hashtags and match not in next_wave:
                         next_wave.append(match)                 
         except tweepy.TweepError:
-            print  traceback.format_exc()
-            #print  sys.exc_info()[0]
+            log(traceback.format_exc())
             if i > 0 and last_error + 2 > i: 
                 time.sleep(60)
                 log('Recurrent rate error. Going to sleep now...')
             last_error = i
-            log('changed to next api key: {}'.format(current_api))
-            current_api += 1 
+            current_api += 1             
+            log('changed to next api key: {0}'.format(current_api))
             if current_api >= len(ckeys): current_api = 0
             continue
         except StopIteration:
@@ -197,6 +196,7 @@ def process_current_wave():
             pickle.dump(next_wave, open(base_path + 'next_wave.p','wb'))
         process_hashtag(current_wave[0])
         processed_hashtags[current_wave[0]] = True
+        log('Successfully processed hashtag: {0}'.format(current_wave[0]))
         del current_wave[0]
         log('Dumping wave data...')
         pickle.dump(current_wave, open(base_path + 'current_wave.p','wb'))
