@@ -34,7 +34,8 @@ config_path = os.path.join(application_path, config_name)
 logging.basicConfig(filename=config_path, format='%(message)s', level=logging.DEBUG)
 
 def log(s): 
-    if DEBUG: logging.log(logging.DEBUG, s)
+    if DEBUG: print s 
+    logging.log(logging.DEBUG, s)
         
 ckeys = []
 csecrets = []
@@ -133,7 +134,7 @@ current_api = 0
 base_path = sys.argv[0].replace('hashtag_crawler.py','')
 data_de = []
 
-print base_path
+log(base_path)
 
 def cast_status_to_dict(tweepy_status):
     ret = {}
@@ -186,18 +187,15 @@ def process_hashtag(query):
 def process_current_wave():
     global current_wave
     i = 0
-    while len(current_wave) > 0:
-        if i % 10 == 0 and i > 0:     
-            log('Dumping data...')       
-            pickle.dump(processed_hashtags, open(base_path + 'hashtags.p','wb'))
-            pickle.dump(data_de, open(base_path + 'data_de2.p','wb'))
-            log('Dumping wave data...')
-            pickle.dump(current_wave, open(base_path + 'current_wave.p','wb'))
-            pickle.dump(next_wave, open(base_path + 'next_wave.p','wb'))
+    while len(current_wave) > 0:   
+        log('Dumping data to {0}'.format(base_path + 'data_de2.p'))       
+        pickle.dump(processed_hashtags, open(base_path + 'hashtags.p','wb'))
+        pickle.dump(data_de, open(base_path + 'data_de2.p','wb'))
+
         process_hashtag(current_wave[0])
         processed_hashtags[current_wave[0]] = True
         log('Successfully processed hashtag: {0}'.format(current_wave[0]))
-        del current_wave[0]
+        del current_wave[0]        
         log('Dumping wave data...')
         pickle.dump(current_wave, open(base_path + 'current_wave.p','wb'))
         pickle.dump(next_wave, open(base_path + 'next_wave.p','wb'))
