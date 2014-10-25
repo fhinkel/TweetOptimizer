@@ -21,6 +21,7 @@ exports.getMetric = function (tweet) {
 
 
 
+
     var result = {};
 
     for (var i = 0; i < hashtags.length; i++) {
