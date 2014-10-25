@@ -18,6 +18,62 @@ var renderRelatedTags = function (data) {
         hashtag: data.hashTag,
         related: data.related
     }));
+    // http://c3js.org/samples/chart_bar.html
+    // get the dom node for c3
+    var chartNode = $("[data-related-tag='" + data.hashTag + "'] .chart")[0] ;
+    var chart = c3.generate({
+        bindto: chartNode,
+        data: {
+            columns: [
+                [data.related[0].tag, 0],
+                [data.related[1].tag, 0],
+                [data.related[2].tag, 0]
+            ],
+            type: 'bar'
+        },
+        bar: {
+            width: {
+                ratio: 0.33 // this makes bar width 33% of length between ticks
+            }
+        },
+        axis: {
+            x: {
+                tick: {
+                    format: function(){return null;}
+                }
+            },
+            y: {
+                label: 'Beliebtheit',
+                tick: {
+                    format: function(){return null;}
+                }
+            }
+        },
+        legend: {
+            show: false
+        },
+        tooltip: {
+            show: false
+        },
+        size: {
+            height: 120
+        },
+        transition: {
+            duration: 1000
+        }
+    });
+    // load data with delay
+    // to get bar chart animations for patrick
+    setTimeout(function () {
+        chart.load({
+            columns: [
+                [data.related[0].tag, 130],
+                [data.related[1].tag, 100],
+                [data.related[2].tag, 90]
+            ],
+        });
+    }, 1);
+
 };
 var renderRelatedUsers = function (data) {
     // if we alrdy have it or we got no content, bail.
