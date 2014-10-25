@@ -5,24 +5,25 @@ var emitCurrentTweet = function () {
     socket.emit('tweet', $('#input').val());
 };
 
-var renderOptimization = function (data, templateId) {
-    var $feed = $('#feed-container');
+var $feed = $('#feed-container');
+var renderOptimization = function (data, templateId) {    
     var source   = $(templateId).html();
     var template = Handlebars.compile(source);
     $feed.append(template(data));
 };
 
 var updateCharCount = function (c) {
-    $('#character-count').html(c);
+    var MAX_CHARS = 140;
+    $('#curr-character-count').html(MAX_CHARS - c);
 };
 
 $(document).ready(function () {
 
     // render a testItem
-    renderOptimization({
-        originalHashtag: 'Peter',
-        newHashtag: 'Hans',
-    }, '#template');
+    // renderOptimization({
+    //     originalHashtag: 'Peter',
+    //     newHashtag: 'Hans',
+    // }, '#template');
 
     $('#input').keyup(function (e) {
         updateCharCount(e.target.value.length);
@@ -36,6 +37,9 @@ $(document).ready(function () {
     socket.on('tweet analysis', function (data) {
         console.log(data);
         var result = JSON.parse(data);
+        for (var i = result.length - 1; i >= 0; i--) {
+            result[i]
+        };
         // for (var hashtag in result) {
         //     if (result.hasOwnProperty(hashtag)) {
         //         $('body').append('<br>');
