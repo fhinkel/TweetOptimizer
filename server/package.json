@@ -3,8 +3,8 @@
   "scripts": {
     "start": "node server.js",
     "test": "mocha tests",
-    "forever": "python python/flask_API.py & ./node_modules/.bin/forever start -l forever.log -a server.js;",
-    "stop": "killall node && killall python"
+    "forever": "./node_modules/.bin/forever start -l forever.log -a server.js;",
+    "stop": "killall node"
   },
   "version": "0.0.0",
   "dependencies": {
