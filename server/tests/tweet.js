@@ -3,9 +3,9 @@ var should = require('should');
 
 describe('tweet', function () {
 
-    it('should return calculate related things', function (next) {
+    it('should calculate related things', function (next) {
         getMetric('#burda', function (error, result) {
-            result.should.equal("{\"hashTag\":\"#burda\",\"related\":[\"#kleinanzeigen\",\"#carrosusados\",\"#sevende\"]}");
+            result.should.equal("{\"hashTag\":\"#burda\",\"related\":[\"#patterns\",\"#sewing\",\"#antique\"]}");
             next();
         });
     });

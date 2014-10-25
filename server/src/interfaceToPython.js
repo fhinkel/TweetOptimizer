@@ -6,7 +6,7 @@ exports.relatedTags = function (hashTag, next) {
     var options = {
         hostname: 'localhost',
         port: 5000,
-        path: '/relatedhashtags',
+        path: '/relatedHashtags',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ exports.relatedUsers = function (hashTag, next) {
     var options = {
         hostname: 'localhost',
         port: 5000,
-        path: '/relateduser',
+        path: '/relatedUsers',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

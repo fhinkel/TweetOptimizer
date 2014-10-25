@@ -7,8 +7,7 @@ describe('tweet', function () {
     it('should return the first 3 users', function (next) {
         relatedUsers("#burda", function (error, response) {
             response.toString()
-                .should.be.equal(
-                ["@einundleipizig","@faz_politik","@t3n"].toString());
+                .should.be.equal("@princesandthepe,@ibmbigdata,");
             next()
         });
     });
@@ -16,8 +15,7 @@ describe('tweet', function () {
     it('should return the first 3 related hash tags', function (next) {
         relatedTags("#burda", function (error, response) {
             response.toString()
-                .should.be.equal(
-                ['#kleinanzeigen', '#carrosusados', '#sevende'].toString());
+                .should.be.equal("#patterns,#sewing,#antique");
             next()
         });
     });
