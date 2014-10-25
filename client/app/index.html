@@ -23,7 +23,7 @@
     <header class="expanded text-center">
         <div class="container">
             <img src="images/logo-m.png" alt="tweetimizer">
-            <h4>Macht deine Tweets sexier!</h4>          
+            <h4>Macht deine Tweets sexier!</h4>
         </div>
     </header>
     <header class="small" style="display: none;">
@@ -53,12 +53,16 @@
 
         </div>
 
-        <script id="template" type="text/x-handlebars-template">
+        <script id="template-related-tags" type="text/x-handlebars-template">
             <div class="col-sm-6">
-                <div class="optimization optimization-social">
+                <div class="optimization optimization-hashtag">
                     <div class="row">
                         <div class="col-xs-9">
-                            {{originalHashtag}} -> {{newHashtag}}
+                            <h4>Ähnliche Hashatgs zu {{hashtag}}</h4>
+                            {{hashtag}} ->
+                            {{#each related}}
+                                {{this}}
+                            {{/each}}
                         </div>
                         <div class="col-xs-3">
                             <button class="btn btn-primary pull-right">
@@ -69,7 +73,25 @@
                 </div>
             </div>
         </script>
-
+        <script id="template-related-users" type="text/x-handlebars-template">
+            <div class="col-sm-6">
+                <div class="optimization optimization-social">
+                    <div class="row">
+                        <div class="col-xs-9">
+                            <h4>Einflussreiche Nutzer zum Thema {{hashtag}}</h4>
+                            {{#each related}}
+                                {{this}}
+                            {{/each}}
+                        </div>
+                        <div class="col-xs-3">
+                            <button class="btn btn-primary pull-right">
+                                <span class="glyphicon glyphicon-ok"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </script>
 
         <!-- build:js scripts/vendor.js -->
         <!-- bower:js -->

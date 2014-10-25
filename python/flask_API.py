@@ -30,14 +30,16 @@ def replacePunctuation(text):
     text = text.replace(':','').replace('!','').replace('?','').replace('RT','')
     return text
 
-def getRelatedTerms(hashtag, level):
-    keywords = rel.get_keywords(hashtag, searchtype = level)
+def getRelatedTerms(search_term, level):
+    keywords = rel.get_keywords(search_term.lower(), searchtype = level)
     words = []
     retweet_ratio = []
+    confidence = []
     for items in keywords:
         words.append(items[0])
         retweet_ratio.append(items[1])
-    dictKeywords = {'terms' : words, 'retweetRatios' : retweet_ratio}
+        confidence.append(items[2])
+    dictKeywords = {'terms' : words, 'retweetRatios' : retweet_ratio, 'confidence' : confidence }
     return dictKeywords
 
 @app.route('/relatedHashtags', methods=['OPTIONS', 'GET', 'POST'])
@@ -94,7 +96,7 @@ def getRelatedAll():
 
     return Response(json.dumps(getRelatedTerms(hashtag, 4)),  mimetype='application/json')  
 
-@app.route('/wordcount', methods=['OPTIONS', 'GET', 'POST'])
+@app.route('/wordCount', methods=['OPTIONS', 'GET', 'POST'])
 @crossdomain(origin='*')
 def getWordCount():    
     global rel

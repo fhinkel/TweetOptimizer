@@ -1,15 +1,29 @@
 var socket = io();
 
 var emitCurrentTweet = function () {
-    console.log('tweet: ' + $("#input").val());
     socket.emit('tweet', $('#input').val());
 };
 
 var $feed = $('#feed-container');
-var renderOptimization = function (data, templateId) {
-    var source = $(templateId).html();
+var renderRelatedTags = function (data) {
+    var source = $('#template-related-tags').html();
     var template = Handlebars.compile(source);
-    $feed.append(template(data));
+    console.log(data);
+    console.log(data.hashTag, data.related);
+    $feed.append(template({
+        hashtag: data.hashTag,
+        related: data.related
+    }));
+};
+var renderRelatedUsers = function (data) {
+    var source = $('#template-related-users').html();
+    var template = Handlebars.compile(source);
+    console.log(data);
+    console.log(data.hashTag, data.related);
+    $feed.append(template({
+        hashtag: data.hashTag,
+        related: data.related
+    }));
 };
 
 var updateCharCount = function (c) {
@@ -36,21 +50,14 @@ $(document).ready(function () {
 
     socket.on('related users', function (data) {
         console.log('we received related users:' + data);
+        var result = JSON.parse(data);
+        renderRelatedUsers(result);
     });
 
     socket.on('related tags', function (data) {
         console.log('we received related tags: ' + data);
         var result = JSON.parse(data);
-        for (var i = result.length - 1; i >= 0; i--) {
-            result[i];
-        }
-        // for (var hashtag in result) {
-        //     if (result.hasOwnProperty(hashtag)) {
-        //         $('body').append('<br>');
-        //         $('body').append(hashtag + '<br>');
-        //         $('body').append('trenddata:' + result.burda.trend.toString() + '<br>');
-        //     }
-        // }
+        renderRelatedTags(result);
     });
 
     socket.on('bunte', function (headline) {
