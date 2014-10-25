@@ -1,23 +1,32 @@
 var express = require('express');
-var calculator = require('./src/tweet').twice;
 var app = express();
-
-app.get('/', function (req, res) {
-    res.send('Hello World!');
-});
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+var analyzeTweet = require('./src/tweet').twice;
 
 app.use(express.static(__dirname + '/public'));
 
-app.get('/tweet', function(req, res) {
-    res.send(calculator());
+app.get('/tweet', function (req, res) {
+    var data = req.data();
+    console.log("we received a tweet:" + data);
+    res.send(analyzeTweet(data));
 });
 
+io.on('connection', function (socket) {
+    console.log('a user connected');
 
-var server = app.listen(3000, function () {
+    socket.on('tweet', function(msg){
+        console.log('we received a tweet for analysis: ' + msg);
+        var metric = '{ "score": "high" }';
+        io.emit('tweet analysis', metric);
+    });
 
-    var host = server.address().address;
-    var port = server.address().port;
-
-    console.log('Example app listening at http://%s:%s', host, port);
-
+    socket.on('disconnect', function(){
+        console.log('user disconnected');
+    });
 });
+
+http.listen(3000, function () {
+    console.log('Example app listening at localhost:3000');
+});
+
