@@ -175,11 +175,11 @@ def process_hashtag(query):
                 time.sleep(60)
                 log('Recurrent rate error. Going to sleep now...')
             last_error = i
-            log('changed to next api key: {}'.format(current_api))
             current_api += 1 
+            log('changed to next api key: {}'.format(current_api))
             if current_api >= len(ckeys): current_api = 0
-            auth = OAuthHandler(ckeys[i], csecrets[i])
-            auth.set_access_token(atokens[i], asecrets[i])
+            auth = OAuthHandler(ckeys[current_api], csecrets[current_api])
+            auth.set_access_token(atokens[current_api], asecrets[current_api])
             api = tweepy.API(auth)            
             continue
         except StopIteration:
