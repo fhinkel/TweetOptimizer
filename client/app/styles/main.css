@@ -1,89 +1,77 @@
-.browsehappy {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
-}
-
-/* Space out content a bit */
 body {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    margin: 0;
+    padding: 0;
+}
+header.small {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #4099FF;
+    width: 100%;
+    color: white;
 }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.marketing,
-.footer {
-    padding-left: 15px;
-    padding-right: 15px;
+header > div > img {
+    margin-top: 40px;
+    max-width: 320px;
+    width: 50%;
+    min-width: 200px;
 }
 
-/* Custom page header */
-.header {
-    border-bottom: 1px solid #e5e5e5;
-}
-
-/* Make the masthead heading the same height as the navigation */
-.header h3 {
+header > div > h4 {
     margin-top: 0;
-    margin-bottom: 0;
-    line-height: 40px;
-    padding-bottom: 19px;
-}
-
-/* Custom page footer */
-.footer {
-    padding-top: 19px;
     color: #777;
-    border-top: 1px solid #e5e5e5;
+    margin-bottom: 50px;
 }
 
-.container-narrow > hr {
-    margin: 30px 0;
-}
-
-/* Main marketing message and sign up button */
-.jumbotron {
-    text-align: center;
-    border-bottom: 1px solid #e5e5e5;
-}
-
-.jumbotron .btn {
-    font-size: 21px;
-    padding: 14px 24px;
-}
-
-/* Supporting marketing content */
-.marketing {
-    margin: 40px 0;
-}
-
-.marketing p + h4 {
-    margin-top: 28px;
-}
-
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-    .container {
-        max-width: 730px;
+@media (max-width: 360px) {
+    header > div > img {
+        margin-top: 10px;
     }
 
-    /* Remove the padding we set earlier */
-    .header,
-    .marketing,
-    .footer {
-        padding-left: 0;
-        padding-right: 0;
+    header > div > h4 {
+        font-size: 12px;
+        margin-bottom: 15px;
     }
+}
 
-    /* Space out the masthead */
-    .header {
-        margin-bottom: 30px;
+@media (max-width: 768px) and (min-width: 360px) {
+    header > div > h4 {
+        font-size: 15px;
+        margin-bottom: 25px;
     }
-    
-    /* Remove the bottom border on the jumbotron for visual effect */
-    .jumbotron {
-        border-bottom: 0;
-    }
+}
+
+#character-count {
+    margin-top: 5px;
+}
+
+#character-count > span {
+    font-weight: bold;
+}
+
+#clipbtn {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#optimization-count {
+    display: none;
+}
+
+.main {} .optimization {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+}
+.optimization-hashtag {
+    border-left-color: #d9534f;
+}
+.optimization-synonym {
+    border-left-color: #f0ad4e;
+}
+.optimization-social {
+    border-left-color: #5bc0de;
 }

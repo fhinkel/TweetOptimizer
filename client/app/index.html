@@ -17,44 +17,14 @@
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
-
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-        header.small {
-            position: fixed;
-            top: 0;
-            left: 0;
-            background: #4099FF;
-            width: 100%;
-            color: white;
-        }
-        .main {} .optimization {
-            padding: 20px;
-            margin: 20px 0;
-            border: 1px solid #eee;
-            border-left-width: 5px;
-            border-radius: 3px;
-        }
-        .optimization-hashtag {
-            border-left-color: #d9534f;
-        }
-        .optimization-synonym {
-            border-left-color: #f0ad4e;
-        }
-        .optimization-social {
-            border-left-color: #5bc0de;
-        }
-    </style>
-
 </head>
 
 <body>
     <header class="expanded text-center">
-        <h3>tweetimizer <img src="images/logo-no-text.png" alt=""></h3>
-        <h4>Macht deine Tweets sexier!</h4>
+        <div class="container">
+            <img src="images/logo-m.png" alt="tweetimizer">
+            <h4>Macht deine Tweets sexier!</h4>          
+        </div>
     </header>
     <header class="small" style="display: none;">
         <div class="container">
@@ -66,15 +36,15 @@
             <textarea class="form-control" id="input" rows="3"></textarea>
             <div class="row">
                 <div class="col-xs-6">
-                    <p>
-                        <span id="character-count">0</span>/140
+                    <p id="character-count">
+                        <span id="curr-character-count">140</span>
                     </p>
                 </div>
                 <div class="col-xs-6 text-right">
-                    <button type="" class="btn btn-primary">copy to clipboard</button>
+                    <button id="clipbtn" type="" class="btn btn-primary">copy to clipboard</button>
                 </div>
             </div>
-            <p class="alert alert-success" role="alert">
+            <p id="optimization-count" class="alert alert-success" role="alert">
                 n optimizations
             </p>
         </div>
