@@ -19,7 +19,6 @@ io.on('connection', function (socket) {
     console.log('a user connected');
 
     var emitRelatedTags = function (error, tags) {
-        console.log('related tags');
         socket.emit('related tags', tags);
     };
 
@@ -27,9 +26,13 @@ io.on('connection', function (socket) {
         socket.emit('related users', users);
     };
 
+    var emitRelatedWords = function (error, users) {
+        socket.emit('related words', users);
+    };
+
     socket.on('tweet', function (msg) {
         console.log('we received a tweet for analysis: ' + msg);
-        getMetric(msg, emitRelatedTags, emitRelatedUsers);
+        getMetric(msg, emitRelatedTags, emitRelatedUsers, emitRelatedWords);
 
         getBunteHeadline(msg, function(error, headline) {
            if (error) {
