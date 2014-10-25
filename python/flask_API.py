@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 '''
 Created on Sep 29, 2014
 
@@ -10,8 +11,10 @@ from flask.ext.cors import CORS
 from relation_calculator import Relation_Calculator
 import sys
 import json
-
+import re
 from crossdomain import crossdomain
+
+http_regex = re.compile(r'''(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))''', re.DOTALL)
 
 app = Flask(__name__)
 
@@ -21,7 +24,13 @@ base_path = sys.argv[0].replace('flask_API.py','')
 
 rel = Relation_Calculator()
 
-@app.route('/relatedhashtags', methods=['OPTIONS', 'GET', 'POST'])
+def replacePunctuation(text):
+    text = http_regex.sub('',text)    
+    text = text.replace(',','').replace('.','').replace(';','').replace('(','').replace(')','')
+    text = text.replace(':','').replace('!','').replace('?','').replace('RT','')
+    return text
+
+@app.route('/relatedHashtags', methods=['OPTIONS', 'GET', 'POST'])
 @crossdomain(origin='*')
 def getRelatedHashtags():    
     global rel
@@ -33,8 +42,25 @@ def getRelatedHashtags():
 
     return Response(json.dumps(dictKeywords),  mimetype='application/json')    
 
+@app.route('/tweetToKeywordList', methods=['OPTIONS', 'GET', 'POST'])
+@crossdomain(origin='*')
+def tweetToRelatedWords():    
+    global rel
+    jsondata = request.get_json(force=True)
+    tweet = jsondata['tweet']
+    tweet = replacePunctuation(tweet)
+    
+    print tweet
+    keywordsList = []
+    for word in tweet.split(' '):
+        if any(x.isupper() for x in word): 
+            keywordsList.append(rel.get_keywords(word.lower(), searchtype = 2)[0:10])
+    dictKeywords = {'keywordList' : keywordsList}
 
-@app.route('/relateduser', methods=['OPTIONS', 'GET', 'POST'])
+    return Response(json.dumps(dictKeywords),  mimetype='application/json')    
+
+
+@app.route('/relatedUsers', methods=['OPTIONS', 'GET', 'POST'])
 @crossdomain(origin='*')
 def getRelatedUser():    
     global rel
@@ -46,7 +72,7 @@ def getRelatedUser():
 
     return Response(json.dumps(dictKeywords),  mimetype='application/json')  
 
-@app.route('/relatedwords', methods=['OPTIONS', 'GET', 'POST'])
+@app.route('/relatedWords', methods=['OPTIONS', 'GET', 'POST'])
 @crossdomain(origin='*')
 def getRelatedWords():    
     global rel
@@ -58,7 +84,7 @@ def getRelatedWords():
 
     return Response(json.dumps(dictKeywords),  mimetype='application/json')    
 
-@app.route('/relatedall', methods=['OPTIONS', 'GET', 'POST'])
+@app.route('/relatedAll', methods=['OPTIONS', 'GET', 'POST'])
 @crossdomain(origin='*')
 def getRelatedAll():    
     global rel
