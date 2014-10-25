@@ -5,7 +5,7 @@ describe('tweet', function () {
 
     it('should return 200', function (next) {
         getAnalysis("tweet", function(error, response) {
-           response.should.equal("Hello World!");
+           response.should.equal('{"hello": "Hello world!"}');
            next()
         }) ;
     });
