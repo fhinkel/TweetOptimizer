@@ -149,10 +149,11 @@ def cast_status_to_dict(tweepy_status):
     ret['follower_count'] = tweepy_status.author.followers_count
     ret['friends_count'] = tweepy_status.author.friends_count
     ret['retweet_count'] = tweepy_status.retweet_count
+    ret['date'] = tweepy_status.created_at
+    ret['img_url'] = tweepy_status.user.profile_image_url
+    ret['name'] = tweepy_status.user.name
+    ret['description'] = tweepy_status.user.name
     return ret
-
-
-
 
 def process_hashtag(query):
     global current_api
@@ -214,21 +215,24 @@ def process_current_wave():
     total_min = (t1-t0)/60.
     log('Current tweet rate: {0} tweets per minute'.format(len(data_de)/total_min))
 
-
+processed_hashtags = {}
 
 
 if os.path.isfile(base_path + 'current_wave.p'):
     current_wave = pickle.load(open(base_path + 'current_wave.p','r'))
-else: next_wave = []
+else: current_wave = ['royals','gamergate','aufschrei','tinder','fml','ebola'] 
+
 if os.path.isfile(base_path + 'next_wave.p'):
     next_wave = pickle.load(open(base_path + 'next_wave.p','r'))
+else: next_wave = []
+
 if os.path.isfile(base_path + 'hashtags.p'):
     processed_hashtags = pickle.load(open(base_path + 'hashtags.p','r'))
-else: cprocessed_hashtags = {}
+else: processed_hashtags = {}
 
 hashtag_rex = re.compile('(?<=^|(?<=[^a-zA-Z0-9-_\.]))#([A-Za-z]+[A-Za-z0-9]+)')
  
-max_tweets = 1000
+max_tweets = 200
 data_en = []
 unique_tweets = {}
 hashtag = '%23'
