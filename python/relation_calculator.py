@@ -66,17 +66,17 @@ class Relation_Calculator():
                 retweet_ratio = self.word_to_retweet_ratio[word.lower()]
             if searchtype == 0:
                 if '#' in word:
-                    words.append([word, retweet_ratio])
+                    words.append([word, retweet_ratio, cos_dist[idx]])
 
             elif searchtype == 1:
                 if '@' in word:
-                    words.append([word, retweet_ratio])
+                    words.append([word, retweet_ratio, cos_dist[idx]])
                     
             elif searchtype == 2:
                 if '@' not in word and '#' not in word:
-                    words.append([word, retweet_ratio])
+                    words.append([word, retweet_ratio, cos_dist[idx]])
             else:
-                words.append([word,retweet_ratio])
+                words.append([word,retweet_ratio, cos_dist[idx]])
                 
         return words
 

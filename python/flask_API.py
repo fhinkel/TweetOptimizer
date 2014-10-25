@@ -34,10 +34,12 @@ def getRelatedTerms(search_term, level):
     keywords = rel.get_keywords(search_term.lower(), searchtype = level)
     words = []
     retweet_ratio = []
+    confidence = []
     for items in keywords:
         words.append(items[0])
         retweet_ratio.append(items[1])
-    dictKeywords = {'terms' : words, 'retweetRatios' : retweet_ratio}
+        confidence.append(items[2])
+    dictKeywords = {'terms' : words, 'retweetRatios' : retweet_ratio, 'confidence' : confidence }
     return dictKeywords
 
 @app.route('/relatedHashtags', methods=['OPTIONS', 'GET', 'POST'])
