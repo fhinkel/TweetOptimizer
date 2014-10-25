@@ -6,8 +6,8 @@ var emitCurrentTweet = function () {
 };
 
 var $feed = $('#feed-container');
-var renderOptimization = function (data, templateId) {    
-    var source   = $(templateId).html();
+var renderOptimization = function (data, templateId) {
+    var source = $(templateId).html();
     var template = Handlebars.compile(source);
     $feed.append(template(data));
 };
@@ -29,17 +29,21 @@ $(document).ready(function () {
         updateCharCount(e.target.value.length);
 
         // 13: enter, 32: spacebar
-        if (e.keyCode === 13 || e.keyCode === 32) {
+        if (e.keyCode === 13 || e.keyCode === 32) {
             emitCurrentTweet();
         }
     });
 
-    socket.on('tweet analysis', function (data) {
-        console.log(data);
+    socket.on('related users', function (data) {
+        console.log('we received related users:' + data);
+    });
+
+    socket.on('related tags', function (data) {
+        console.log('we received related tags: ' + data);
         var result = JSON.parse(data);
         for (var i = result.length - 1; i >= 0; i--) {
-            result[i]
-        };
+            result[i];
+        }
         // for (var hashtag in result) {
         //     if (result.hasOwnProperty(hashtag)) {
         //         $('body').append('<br>');
@@ -49,12 +53,12 @@ $(document).ready(function () {
         // }
     });
 
-    socket.on('bunte', function(headline) {
+    socket.on('bunte', function (headline) {
         console.log('Bunte Article: ' + headline);
     })
 });
 
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
     var offset = window.pageYOffset;
     var $headerSmall = $('header.small');
     if (offset > 50) {

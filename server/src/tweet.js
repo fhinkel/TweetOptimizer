@@ -1,5 +1,4 @@
 
-var getAnalysisForTweetsFromCrawler = require('./interfaceToPython').getAnalysis;
 var relatedTags = require('./interfaceToPython').relatedTags;
 var relatedUsers = require('./interfaceToPython').relatedUsers;
 
@@ -20,6 +19,7 @@ exports.getMetric = function (tweet, nextTags, nextUsers, nextWords) {
     for (var i = 0; i < hashTags.length; i++) {
         var tag = hashTags[i];
 
+        
         relatedTags(tag, function(error, response) {
             if (error) {
                 console.log('Getting related tags failed.' + error);
