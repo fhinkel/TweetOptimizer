@@ -19,12 +19,14 @@ io.on('connection', function (socket) {
 
     socket.on('tweet', function (msg) {
         console.log('we received a tweet for analysis: ' + msg);
-        var metric = getMetric(msg, function (error, metric) {
+        getMetric(msg, function (error, metric) {
             if (error) {
                 console.log("error receiving metric: " + error);
             }
             socket.emit('tweet analysis', metric);
         });
+
+
     });
 
     socket.on('disconnect', function () {
