@@ -1,10 +1,15 @@
 $(document).ready(function () {
-    console.log('hello tweet');
-    var socket = io();
+    console.log('helloo');
 
-    $("#tweet").on('click', function (data) {
-        console.log('tweet: ' + $("#input").val());
-        socket.emit('tweet', $('#input').val());
+    $('#input').keyup(function (e) {
+        $('#character-count').html(e.target.value.length);
+    });
+    var socket = io();
+    $('#input').keyup(function (e) {
+        if(e.keyCode == 13) {
+            console.log('tweet: ' + $("#input").val());
+            socket.emit('tweet', $('#input').val());
+        }
     });
 
     socket.on('tweet analysis', function (data) {
@@ -19,3 +24,4 @@ $(document).ready(function () {
         }
     });
 });
+
