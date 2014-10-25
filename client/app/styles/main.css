@@ -88,7 +88,23 @@ header > div > h4 {
     border-left-color: #e30614;
 }
 
+.optimization-bunte > h4 {
+    margin-bottom: 20px;
+}
+
 .optimization-bunte > h4 > span {
     background-color: #e30614;
     border-radius: 0.1em;
+}
+
+.optimization-bunte > h5 {
+    margin-bottom: 0;
+}
+
+.optimization-bunte > p {
+    font-style: italic;
+}
+
+.optimization-bunte > p:last-child {
+    margin-bottom: 0;
 }
