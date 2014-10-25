@@ -15,7 +15,7 @@ import traceback
 os.environ['http_proxy']= ''
 import logging 
 import os
-
+import os.path
 t0 = time.time()
 
 DEBUG = True
@@ -136,6 +136,13 @@ data_de = []
 
 log(base_path)
 
+apis = []
+for i in range(len(ckeys)):
+    auth = OAuthHandler(ckeys[i], csecrets[i])
+    auth.set_access_token(atokens[i], asecrets[i])
+    apis.append(tweepy.API(auth))
+
+
 def cast_status_to_dict(tweepy_status):
     ret = {}
     ret['text'] = tweepy_status.text
@@ -144,11 +151,7 @@ def cast_status_to_dict(tweepy_status):
     ret['retweet_count'] = tweepy_status.retweet_count
     return ret
 
-apis = []
-for i in range(len(ckeys)):
-    auth = OAuthHandler(ckeys[i], csecrets[i])
-    auth.set_access_token(atokens[i], asecrets[i])
-    apis.append(tweepy.API(auth))
+
 
 
 def process_hashtag(query):
@@ -211,10 +214,17 @@ def process_current_wave():
     total_min = (t1-t0)/60.
     log('Current tweet rate: {0} tweets per minute'.format(len(data_de)/total_min))
 
-processed_hashtags = {}
 
-next_wave = []
-current_wave = ['royals','gamergate','aufschrei','tinder','fml','ebola']
+
+
+if os.path.isfile(base_path + 'current_wave.p'):
+    current_wave = pickle.load(open(base_path + 'current_wave.p','r'))
+else: next_wave = []
+if os.path.isfile(base_path + 'next_wave.p'):
+    next_wave = pickle.load(open(base_path + 'next_wave.p','r'))
+if os.path.isfile(base_path + 'hashtags.p'):
+    processed_hashtags = pickle.load(open(base_path + 'hashtags.p','r'))
+else: cprocessed_hashtags = {}
 
 hashtag_rex = re.compile('(?<=^|(?<=[^a-zA-Z0-9-_\.]))#([A-Za-z]+[A-Za-z0-9]+)')
  
