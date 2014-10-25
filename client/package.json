@@ -2,7 +2,7 @@
     "name": "opendatahackday",
     "version": "0.0.0",
     "dependencies": {},
-    "script": {
+    "scripts": {
         "build": "./node_modules/.bin/bower install"
     },
     "devDependencies": {
