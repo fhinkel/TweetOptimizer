@@ -6,12 +6,16 @@ Created on Oct 25, 2014
 
 import numpy as np
 from scipy.spatial import distance
+import cPickle as pickle
 
 class Relation_Calculator():
     
     def __init__(self):        
         with open('vectors.txt') as f:
-            content = f.readlines()  
+            content = f.readlines()              
+            
+        self.word_to_retweet_ratio = pickle.load(open('word_retweet_ratio.p','r'))
+        self.word_counts = pickle.load(open('word_counts.p','r'))
             
         vectors = []
         compressed_ingredients = []
@@ -34,6 +38,11 @@ class Relation_Calculator():
             
         self.X = np.array(X)
         pass    
+    
+    def get_word_count(self, word):
+        if word in self.word_counts: return self.word_counts[word]
+        else: return 0
+            
 
     def get_keywords(self, searchword, searchtype = 0):
         #searchtype 0 == hashtag
@@ -52,19 +61,22 @@ class Relation_Calculator():
         
         for idx in nearest:
             word = self.idx_dict[idx]
+            retweet_ratio = 'NA'
+            if word.lower() in self.word_to_retweet_ratio:
+                retweet_ratio = self.word_to_retweet_ratio[word.lower()]
             if searchtype == 0:
                 if '#' in word:
-                    words.append(word)
+                    words.append([word, retweet_ratio])
 
             elif searchtype == 1:
                 if '@' in word:
-                    words.append(word)
+                    words.append([word, retweet_ratio])
                     
             elif searchtype == 2:
                 if '@' not in word and '#' not in word:
-                    words.append(word)
+                    words.append([word, retweet_ratio])
             else:
-                words.append(word)
+                words.append([word,retweet_ratio])
                 
         return words
 

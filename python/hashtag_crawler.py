@@ -155,7 +155,7 @@ def process_hashtag(query):
     global processed_hashtags    
     global data_de
     processed_hashtags[query] = True
-    items = tweepy.Cursor(apis[current_api].search, q=hashtag + query,lang='en').items(max_tweets)
+    items = tweepy.Cursor(apis[current_api].search, q=hashtag + query,lang='de').items(max_tweets)
     i = 0
     last_error = 0
     while True:
@@ -190,7 +190,7 @@ def process_current_wave():
         if i % 10 == 0 and i > 0:     
             log('Dumping data...')       
             pickle.dump(processed_hashtags, open(base_path + 'hashtags.p','wb'))
-            pickle.dump(data_de, open(base_path + 'data_en.p','wb'))
+            pickle.dump(data_de, open(base_path + 'data_de2.p','wb'))
             log('Dumping wave data...')
             pickle.dump(current_wave, open(base_path + 'current_wave.p','wb'))
             pickle.dump(next_wave, open(base_path + 'next_wave.p','wb'))
@@ -205,7 +205,7 @@ def process_current_wave():
         
     log('Dumping data...')
     pickle.dump(processed_hashtags, open(base_path + 'hashtags.p','wb'))
-    pickle.dump(data_de, open(base_path + 'data_en.p','wb'))
+    pickle.dump(data_de, open(base_path + 'data_de2.p','wb'))
     log('Current tweet count: {0}'.format(len(data_de)))
     
     t1 = time.time()
@@ -216,7 +216,7 @@ def process_current_wave():
 processed_hashtags = {}
 
 next_wave = []
-current_wave = ['bunte','hackathon','burda','journalismus','ddj']
+current_wave = ['royals','gamergate','aufschrei','tinder','fml','ebola']
 
 hashtag_rex = re.compile('(?<=^|(?<=[^a-zA-Z0-9-_\.]))#([A-Za-z]+[A-Za-z0-9]+)')
  
