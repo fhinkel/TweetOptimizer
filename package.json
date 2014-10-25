@@ -1,15 +1,16 @@
 {
-    "name": "hellonode",
-    "scripts": {
-        "start": "node server.js",
-        "test": "mocha tests"
-    },
-    "version": "0.0.0",
-    "dependencies": {
-        "express": "~4.9.8"
-    },
-    "devDependencies": {
-        "should": "~4.1.0",
-        "mocha": "~2.0.0"
-    }
+  "name": "hellonode",
+  "scripts": {
+    "start": "node server.js",
+    "test": "mocha tests"
+  },
+  "version": "0.0.0",
+  "dependencies": {
+    "express": "~4.9.8",
+    "jquery": "~2.1.1"
+  },
+  "devDependencies": {
+    "should": "~4.1.0",
+    "mocha": "~2.0.0"
+  }
 }
