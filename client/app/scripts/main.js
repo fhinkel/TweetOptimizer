@@ -5,35 +5,24 @@ var emitCurrentTweet = function () {
     socket.emit('tweet', $('#input').val());
 };
 
+var renderOptimization = function (data, templateId) {
+    var $feed = $('#feed-container');
+    var source   = $(templateId).html();
+    var template = Handlebars.compile(source);
+    $feed.append(template(data));
+};
+
+var updateCharCount = function (c) {
+    $('#character-count').html(c);
+};
+
 $(document).ready(function () {
-    var feed = $('#feed-container');
 
-    var updateCharCount = function (c) {
-        $('#character-count').html(c);
-    };
-
-    var createFeedItem = function (className, $contentDiv) {
-        var $baseItem = $('<div/>')
-            .addClass('col-sm-6');
-        var $container = $('<div/>')
-            .addClass('optimization')
-            .addClass(className)
-            .appendTo($baseItem);
-        var $row = $('<div/>')
-            .addClass('row')
-            .appendTo($container);
-        $contentDiv
-            .addClass('col-xs-9')
-            .appendTo($row);
-        var $apply = $('<div/>')
-            .addClass('col-xs-3')
-            .html('<button class="btn btn-primary pull-right"><span class="glyphicon glyphicon-ok"></span></button>')
-            .appendTo($row);
-        return $baseItem;
-    };
-
-    var $test = createFeedItem('optimization-hashtag', $('<div/>').text('test'));
-    feed.append($test);
+    // render a testItem
+    renderOptimization({
+        originalHashtag: 'Peter',
+        newHashtag: 'Hans',
+    }, '#template');
 
     $('#input').keyup(function (e) {
         updateCharCount(e.target.value.length);

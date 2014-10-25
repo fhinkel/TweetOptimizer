@@ -137,7 +137,6 @@ print base_path
 
 def cast_status_to_dict(tweepy_status):
     ret = {}
-    print tweepy_status.author
     ret['text'] = tweepy_status.text
     ret['follower_count'] = tweepy_status.author.followers_count
     ret['friends_count'] = tweepy_status.author.friends_count
@@ -194,7 +193,7 @@ def process_current_wave():
         if i % 10 == 0 and i > 0:     
             log('Dumping data...')       
             pickle.dump(processed_hashtags, open(base_path + 'hashtags.p','wb'))
-            pickle.dump(data_de, open(base_path + 'data_de.p','wb'))
+            pickle.dump(data_de, open(base_path + 'data_de2.p','wb'))
         process_hashtag(current_wave[0])
         processed_hashtags[current_wave[0]] = True
         del current_wave[0]
@@ -206,7 +205,7 @@ def process_current_wave():
     log('Dumping data...')
     
     pickle.dump(processed_hashtags, open(base_path + 'hashtags.p','wb'))
-    pickle.dump(data_de, open(base_path + 'data_de.p','wb'))
+    pickle.dump(data_de, open(base_path + 'data_de2.p','wb'))
     log('Current tweet count: {0}'.format(len(data_de)))
     
     t1 = time.time()
