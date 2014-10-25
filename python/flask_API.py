@@ -30,6 +30,16 @@ def replacePunctuation(text):
     text = text.replace(':','').replace('!','').replace('?','').replace('RT','')
     return text
 
+def getRelatedTerms(hashtag, level):
+    keywords = rel.get_keywords(hashtag, searchtype = level)
+    words = []
+    retweet_ratio = []
+    for items in keywords:
+        words.append(items[0])
+        retweet_ratio.append(items[1])
+    dictKeywords = {'terms' : words, 'retweetRatios' : retweet_ratio}
+    return dictKeywords
+
 @app.route('/relatedHashtags', methods=['OPTIONS', 'GET', 'POST'])
 @crossdomain(origin='*')
 def getRelatedHashtags():    
@@ -37,10 +47,7 @@ def getRelatedHashtags():
     jsondata = request.get_json(force=True)
     hashtag = jsondata['term']
 
-    keywords = rel.get_keywords(hashtag, searchtype = 0)
-    dictKeywords = {'terms' : keywords}
-
-    return Response(json.dumps(dictKeywords),  mimetype='application/json')    
+    return Response(json.dumps(getRelatedTerms(hashtag, 0)),  mimetype='application/json')    
 
 @app.route('/tweetToKeywordList', methods=['OPTIONS', 'GET', 'POST'])
 @crossdomain(origin='*')
@@ -67,10 +74,7 @@ def getRelatedUser():
     jsondata = request.get_json(force=True)
     hashtag = jsondata['term']
 
-    keywords = rel.get_keywords(hashtag, searchtype = 1)
-    dictKeywords = {'terms' : keywords}
-
-    return Response(json.dumps(dictKeywords),  mimetype='application/json')  
+    return Response(json.dumps(getRelatedTerms(hashtag, 1)),  mimetype='application/json')  
 
 @app.route('/relatedWords', methods=['OPTIONS', 'GET', 'POST'])
 @crossdomain(origin='*')
@@ -79,10 +83,7 @@ def getRelatedWords():
     jsondata = request.get_json(force=True)
     hashtag = jsondata['term']
 
-    keywords = rel.get_keywords(hashtag, searchtype = 3)
-    dictKeywords = {'terms' : keywords}
-
-    return Response(json.dumps(dictKeywords),  mimetype='application/json')    
+    return Response(json.dumps(getRelatedTerms(hashtag, 3)),  mimetype='application/json')    
 
 @app.route('/relatedAll', methods=['OPTIONS', 'GET', 'POST'])
 @crossdomain(origin='*')
@@ -91,10 +92,16 @@ def getRelatedAll():
     jsondata = request.get_json(force=True)
     hashtag = jsondata['term']
 
-    keywords = rel.get_keywords(hashtag, searchtype = 4)
-    dictKeywords = {'terms' : keywords}
+    return Response(json.dumps(getRelatedTerms(hashtag, 4)),  mimetype='application/json')  
 
-    return Response(json.dumps(dictKeywords),  mimetype='application/json')  
+@app.route('/wordcount', methods=['OPTIONS', 'GET', 'POST'])
+@crossdomain(origin='*')
+def getWordCount():    
+    global rel
+    jsondata = request.get_json(force=True)
+    word = jsondata['term']  
+
+    return Response(json.dumps({'count' :  rel.get_word_count(replacePunctuation(word))}),  mimetype='application/json')  
 
 if __name__ == "__main__":
     app.debug = True
