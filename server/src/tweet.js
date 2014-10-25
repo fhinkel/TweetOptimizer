@@ -26,11 +26,13 @@ exports.getMetric = function (tweet, next) {
             [80, 75, 60, 40, 30, 23, 20, 18, 25, 22, 24, 19, 22],
             [45, 50, 30, 30, 30, 40, 50, 66, 30, 33, 29, 28, 12]
         ];
-        var result = {};
+        var result = {
+            hashtags: {}
+        };
 
         for (var i = 0; i < hashtags.length; i++) {
             var tag = hashtags[i];
-            result[tag] = {
+            result.hashtags[tag] = {
                 score: "40",
                 alternative: alternatives[i],
                 trend: trends[i]
