@@ -16,7 +16,9 @@ os.environ['http_proxy']= ''
 import logging 
 import os
 
-DEBUG = True
+t0 = time.time()
+
+DEBUG = False
 
 config_name = 'debug.txt'
 
@@ -192,9 +194,16 @@ def process_current_wave():
         processed_hashtags[current_wave[0]] = True
         del current_wave[0]
         
+        i+=1
+        
     pickle.dump(processed_hashtags, open(base_path + 'hashtags.p','wb'))
     pickle.dump(data_de, open(base_path + 'data_de.p','wb'))
     log('Current tweet count: {0}'.format(len(data_de)))
+    
+    t1 = time.time()
+    
+    total_min = (t1-t0)/60.
+    log('Current tweet rate: {0} tweets per minute'.format(len(data_de)/total_min))
 
 processed_hashtags = {}
 
