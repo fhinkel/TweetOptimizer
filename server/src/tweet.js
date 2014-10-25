@@ -1,6 +1,6 @@
-
 var relatedTags = require('./interfaceToPython').relatedTags;
 var relatedUsers = require('./interfaceToPython').relatedUsers;
+var relatedWords = require('./interfaceToPython').relatedWords;
 
 var regex = /\S*#(?:\[[^\]]+\]|\S+)/gi;
 var getHashTags = function (tweet) {
@@ -14,34 +14,27 @@ var getHashTags = function (tweet) {
     return hashtags;
 };
 
+var getRelated = function (specificTag, relatedSomething, next) {
+    relatedSomething(specificTag, function (error, response) {
+        if (error) {
+            console.log('Getting ' + relatedSomething + ' failed.' + error);
+            return;
+        }
+        var result = {
+            hashTag: specificTag,
+            related: response
+        };
+        next(null, JSON.stringify(result));
+    });
+};
+
 exports.getMetric = function (tweet, nextTags, nextUsers, nextWords) {
     var hashTags = getHashTags(tweet);
     for (var i = 0; i < hashTags.length; i++) {
         var tag = hashTags[i];
 
-        
-        relatedTags(tag, function(error, response) {
-            if (error) {
-                console.log('Getting related tags failed.' + error);
-                return;
-            }
-            var result = {
-                hashTag: tag,
-                related: response
-            };
-            nextTags(null, JSON.stringify(result));
-        });
-
-        relatedUsers(tag, function(error, response) {
-            if (error) {
-                console.log('Getting related users failed.' + error);
-                return;
-            }
-            var result = {
-                hashTag: tag,
-                related: response
-            };
-            nextUsers(null, JSON.stringify(result));
-        });
+        getRelated(tag, relatedTags, nextTags);
+        getRelated(tag, relatedUsers, nextUsers);
+        getRelated(tag, relatedWords, nextWords);
     }
 };

@@ -1,6 +1,7 @@
 var should = require('should');
 var relatedUsers = require('../src/interfaceToPython').relatedUsers;
 var relatedTags = require('../src/interfaceToPython').relatedTags;
+var relatedWords = require('../src/interfaceToPython').relatedWords;
 
 describe('tweet', function () {
 
@@ -18,5 +19,13 @@ describe('tweet', function () {
                 .should.be.equal("#patterns,#sewing,#antique");
             next()
         });
+    });
+
+    it('should return status code 200 for related words', function(next) {
+        relatedWords("#burda", function(error, response) {
+            response.toString()
+                .should.be.equal("#patterns,#sewing,mai");
+        });
+       next();
     });
 });
