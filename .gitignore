@@ -3,3 +3,4 @@ node_modules
 *.idea
 python/crossdomain.pyc
 .DS_Store
+bower_components
