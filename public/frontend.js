@@ -8,7 +8,7 @@ $(document).ready(function(){
     });
 
     socket.on('tweet analysis', function(data) {
-        console.log('we received analysis:' + data);
+        console.log('we received analysis: ' + data);
 
     })
 });

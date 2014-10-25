@@ -18,7 +18,7 @@ io.on('connection', function (socket) {
     socket.on('tweet', function(msg){
         console.log('we received a tweet for analysis: ' + msg);
         var metric = '{ "score": "high" }';
-        io.emit('tweet analysis', metric);
+        socket.emit('tweet analysis', metric);
     });
 
     socket.on('disconnect', function(){
