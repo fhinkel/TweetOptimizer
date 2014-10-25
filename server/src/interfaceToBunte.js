@@ -22,7 +22,6 @@ exports.getAnalysis = function(next) {
 
         res.on('end', function () {
             next(null, JSON.parse(data));
-            //console.log(data);
         });
 
     }).on('error', function (e) {
