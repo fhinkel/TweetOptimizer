@@ -1,6 +1,6 @@
 var http = require('http');
 
-exports.getAnalysis = function(tweet, next) {
+exports.getAnalysis = function(next) {
 
 
     var username = "hackday";

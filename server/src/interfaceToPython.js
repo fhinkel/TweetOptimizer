@@ -1,11 +1,23 @@
 var http = require('http');
 
-exports.getAnalysis = function(tweet, next) {
+exports.getAnalysis = function (tweet, next) {
 
-    http.get("http://127.0.0.1:5000/hello", function (res) {
+    var options = {
+        hostname: 'localhost',
+        port: 5000,
+        path: '/relatedHashtags',
+        method: 'POST'
+    };
+
+    http.get(options, function (res) {
+        var data = '';
         res.on('data', function (chunk) {
-            next(null, chunk.toString());
+            data += chunk;
         });
+
+        res.on('end', function () {
+            next(null, chunk.toString());
+        })
 
     }).on('error', function (e) {
         console.log("Got error: " + e.message);
