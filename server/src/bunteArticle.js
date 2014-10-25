@@ -13,10 +13,11 @@ var tokenize = function(string) {
 }
 
 // computes the # of exact word matches from the tweet and headlines
-var computeSimilarity = function (tweetTokens, headline, subheadline) {
+var computeSimilarity = function (tweetTokens, headline, subheadline, shortText) {
 	similarity = 0;
 	var headlineTokens = tokenize(headline.trim());
 	var subheadlineTokens = tokenize(subheadline.trim());
+	var shortTextTokens = tokenize(shortText.trim());
 
 	var currToken;
 	for (var i = 0; i < tweetTokens.length; i++) {
@@ -30,6 +31,14 @@ var computeSimilarity = function (tweetTokens, headline, subheadline) {
 
 		for (var j = 0; j < subheadlineTokens.length; j++) {
 			if (currToken.toLowerCase() === subheadlineTokens[j].toLowerCase()) {
+				similarity++;
+			}
+		};
+
+		for (var j = 0; j < shortTextTokens.length; j++) {
+			if (shortTextTokens[j].length < 3) {
+				continue;
+			} else if (currToken.toLowerCase() === shortTextTokens[j].toLowerCase()) {
 				similarity++;
 			}
 		};
@@ -48,12 +57,14 @@ exports.getHeadlines = function(tweet, next) {
     getBunteData(function(error, data) {
     	var articles = data.articleArray;
 
-    	var currArticle, currHeadline, currSubheadline, currSimilarity, newItem;
+    	var currArticle, currHeadline, currSubheadline, currSimilarity, 
+    	    currShortText, newItem;
     	for (var i = 0; i < articles.length; i++) {
     		currArticle = articles[i];
     		currHeadline = currArticle.headlineText;
     		currSubheadline = currArticle.title;
-    		currSimilarity = computeSimilarity(tweetTokens, currHeadline, currSubheadline);
+    		currShortText = currArticle.shortText;
+    		currSimilarity = computeSimilarity(tweetTokens, currHeadline, currSubheadline, currShortText);
 
     		newItem = {
     			headline: currHeadline,
