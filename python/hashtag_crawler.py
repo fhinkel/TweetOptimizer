@@ -130,7 +130,10 @@ asecrets.append('oBy36n6rz8G7a6sZUOzNbeWcWCzPKFu4MuNmyZUyPRfkE')
 
 current_api = 0
 
-base_path = sys.argv[0].replace('hashtag_crawler','')
+base_path = sys.argv[0].replace('hashtag_crawler.py','')
+data_de = []
+
+print base_path
 
 def cast_status_to_dict(tweepy_status):
     ret = {}
@@ -187,7 +190,8 @@ def process_current_wave():
     global current_wave
     i = 0
     while len(current_wave) > 0:
-        if i % 10 == 0 and i > 0:            
+        if i % 10 == 0 and i > 0:     
+            log('Dumping data...')       
             pickle.dump(processed_hashtags, open(base_path + 'hashtags.p','wb'))
             pickle.dump(data_de, open(base_path + 'data_de.p','wb'))
         process_hashtag(current_wave[0])
@@ -196,6 +200,7 @@ def process_current_wave():
         
         i+=1
         
+    log('Dumping data...')
     pickle.dump(processed_hashtags, open(base_path + 'hashtags.p','wb'))
     pickle.dump(data_de, open(base_path + 'data_de.p','wb'))
     log('Current tweet count: {0}'.format(len(data_de)))
@@ -213,7 +218,6 @@ current_wave = ['bunte','hackathon','burda','journalismus','ddj']
 hashtag_rex = re.compile('(?<=^|(?<=[^a-zA-Z0-9-_\.]))#([A-Za-z]+[A-Za-z0-9]+)')
  
 max_tweets = 1000
-data_de = []
 data_en = []
 unique_tweets = {}
 hashtag = '%23'
