@@ -137,7 +137,6 @@ print base_path
 
 def cast_status_to_dict(tweepy_status):
     ret = {}
-    print tweepy_status.author
     ret['text'] = tweepy_status.text
     ret['follower_count'] = tweepy_status.author.followers_count
     ret['friends_count'] = tweepy_status.author.friends_count
