@@ -4,7 +4,9 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var getMetric = require('./src/tweet').getMetric;
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/../client/app/'));
+
+console.log(__dirname + '/../client/app/');
 
 app.get('/tweet', function (req, res) {
     var data = req.data();
@@ -33,4 +35,3 @@ io.on('connection', function (socket) {
 http.listen(3000, function () {
     console.log('Example app listening at localhost:3000');
 });
-
