@@ -20,9 +20,11 @@ var getRelated = function (specificTag, relatedSomething, next) {
             console.log('Getting ' + relatedSomething + ' failed.' + error);
             return;
         }
+
+        console.log("WE REACHED tweet.js#getRelated!");
         var result = {
             hashTag: specificTag,
-            related: response
+            related: response.slice(0,3)
         };
         next(null, JSON.stringify(result));
     });

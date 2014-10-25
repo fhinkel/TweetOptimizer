@@ -57,17 +57,23 @@
             <div class="col-sm-6" data-related-tag="{{hashtag}}">
                 <div class="optimization optimization-hashtag">
                     <div class="row">
+                        <h4>Ähnliche Hashtags zu {{hashtag}}</h4>
+                        <div class="col-xs-3">
+                            <div class="chart">
+                                <!-- insert chart here -->
+                                graph
+                            </div>
+                        </div>
                         <div class="col-xs-9">
-                            <h4>Ähnliche Hashtags zu {{hashtag}}</h4>
                             {{#each related}}
-                                {{this}} (0.78)
+                                {{this.tag}} ({{this.confidence}})
                             {{/each}}
                         </div>
-                        <div class="col-xs-3">
-                            <button class="btn btn-primary pull-right">
-                                <span class="glyphicon glyphicon-ok"></span>
-                            </button>
-                        </div>
+<!--                         <div class="col-xs-3">
+    <button class="btn btn-primary pull-right">
+        <span class="glyphicon glyphicon-ok"></span>
+    </button>
+</div> -->
                     </div>
                 </div>
             </div>
@@ -76,17 +82,23 @@
             <div class="col-sm-6" data-related-user="{{hashtag}}">
                 <div class="optimization optimization-social">
                     <div class="row">
+                        <h4>Einflussreiche Nutzer zum Thema {{hashtag}}</h4>
+                        <div class="col-xs-3">
+                            <div class="chart">
+                                <!-- insert chart here -->
+                                graph
+                            </div>
+                        </div>
                         <div class="col-xs-9">
-                            <h4>Einflussreiche Nutzer zum Thema {{hashtag}}</h4>
                             {{#each related}}
-                                {{this}}
+                                {{this.tag}}
                             {{/each}}
                         </div>
-                        <div class="col-xs-3">
-                            <button class="btn btn-primary pull-right">
-                                <span class="glyphicon glyphicon-ok"></span>
-                            </button>
-                        </div>
+<!--                         <div class="col-xs-3">
+    <button class="btn btn-primary pull-right">
+        <span class="glyphicon glyphicon-ok"></span>
+    </button>
+</div> -->
                     </div>
                 </div>
             </div>

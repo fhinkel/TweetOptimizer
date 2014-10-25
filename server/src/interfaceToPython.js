@@ -19,10 +19,11 @@ var sendRequest = function (postData, path, next) {
         });
 
         res.on('end', function () {
-            var result = JSON.parse(data)["terms"];
+            return next(null, JSON.parse(data));
+            //var result = JSON.parse(data);
             // leave out first result because it is the hashTag
-            next(null, [result[1], result[2], result[3]]);
-        })
+            //next(null, [result[1], result[2], result[3]]);
+        });
 
     }).on('error', function (e) {
         next(e);
@@ -49,4 +50,3 @@ exports.relatedWords = function (hashTag, next) {
     var path = '/relatedWords';
     sendRequest(postData, path, next);
 };
-
