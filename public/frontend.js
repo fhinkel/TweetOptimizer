@@ -1,3 +1,7 @@
 $(document).ready(function(){
-    // alert('hello tweet');
+    console.log('hello tweet');
+
+    $("#tweet").on('click', function(data) {
+        console.log('tweet: ' + $("#input").val());
+    });
 });
