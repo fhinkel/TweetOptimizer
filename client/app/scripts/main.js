@@ -55,6 +55,10 @@ $(document).ready(function () {
         //     }
         // }
     });
+
+    socket.on('bunte', function(headline) {
+        console.log('Bunte Article: ' + headline);
+    })
 });
 
 window.addEventListener('scroll', function() {
