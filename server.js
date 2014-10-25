@@ -15,13 +15,17 @@ app.get('/tweet', function (req, res) {
 io.on('connection', function (socket) {
     console.log('a user connected');
 
-    socket.on('tweet', function(msg){
+    socket.on('tweet', function (msg) {
         console.log('we received a tweet for analysis: ' + msg);
-        var metric = getMetric(msg);
-        socket.emit('tweet analysis', metric);
+        var metric = getMetric(msg, function (error, metric) {
+            if (error) {
+                console.log("error receiving metric: " + error);
+            }
+            socket.emit('tweet analysis', metric);
+        });
     });
 
-    socket.on('disconnect', function(){
+    socket.on('disconnect', function () {
         console.log('user disconnected');
     });
 });

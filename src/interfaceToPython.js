@@ -9,6 +9,6 @@ exports.getAnalysis = function(tweet, next) {
 
     }).on('error', function (e) {
         console.log("Got error: " + e.message);
-        next(error);
+        next(e);
     });
 };
