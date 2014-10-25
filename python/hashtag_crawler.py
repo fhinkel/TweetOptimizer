@@ -143,17 +143,19 @@ def cast_status_to_dict(tweepy_status):
     ret['retweet_count'] = tweepy_status.retweet_count
     return ret
 
-auth = OAuthHandler(ckeys[0], csecrets[0])
-auth.set_access_token(atokens[0], asecrets[0])
-api = tweepy.API(auth)
+apis = []
+for i in range(len(ckeys)):
+    auth = OAuthHandler(ckeys[i], csecrets[i])
+    auth.set_access_token(atokens[i], asecrets[i])
+    apis.append(tweepy.API(auth))
+
 
 def process_hashtag(query):
     global current_api
     global processed_hashtags    
     global data_de
-    global api
     processed_hashtags[query] = True
-    items = tweepy.Cursor(api.search, q=hashtag + query,lang='de').items(max_tweets)
+    items = tweepy.Cursor(apis[current_api].search, q=hashtag + query,lang='en').items(max_tweets)
     i = 0
     last_error = 0
     while True:
@@ -169,21 +171,16 @@ def process_hashtag(query):
                     if match not in processed_hashtags and match not in next_wave:
                         next_wave.append(match)                 
         except tweepy.TweepError:
-            print  traceback.format_exc()
-            #print  sys.exc_info()[0]
-            if i > 0 and last_error + 10 > i: 
+            log(traceback.format_exc())
+            if i > 0 and last_error + 2 > i: 
                 time.sleep(60)
                 log('Recurrent rate error. Going to sleep now...')
             last_error = i
-            current_api += 1 
-            log('changed to next api key: {}'.format(current_api))
+            current_api += 1             
+            log('changed to next api key: {0}'.format(current_api))
             if current_api >= len(ckeys): current_api = 0
-            auth = OAuthHandler(ckeys[current_api], csecrets[current_api])
-            auth.set_access_token(atokens[current_api], asecrets[current_api])
-            api = tweepy.API(auth)            
             continue
         except StopIteration:
-            print i
             break
 
 def process_current_wave():
@@ -193,9 +190,13 @@ def process_current_wave():
         if i % 10 == 0 and i > 0:     
             log('Dumping data...')       
             pickle.dump(processed_hashtags, open(base_path + 'hashtags.p','wb'))
-            pickle.dump(data_de, open(base_path + 'data_de2.p','wb'))
+            pickle.dump(data_de, open(base_path + 'data_en.p','wb'))
+            log('Dumping wave data...')
+            pickle.dump(current_wave, open(base_path + 'current_wave.p','wb'))
+            pickle.dump(next_wave, open(base_path + 'next_wave.p','wb'))
         process_hashtag(current_wave[0])
         processed_hashtags[current_wave[0]] = True
+        log('Successfully processed hashtag: {0}'.format(current_wave[0]))
         del current_wave[0]
         log('Dumping wave data...')
         pickle.dump(current_wave, open(base_path + 'current_wave.p','wb'))
@@ -203,9 +204,8 @@ def process_current_wave():
         i+=1
         
     log('Dumping data...')
-    
     pickle.dump(processed_hashtags, open(base_path + 'hashtags.p','wb'))
-    pickle.dump(data_de, open(base_path + 'data_de2.p','wb'))
+    pickle.dump(data_de, open(base_path + 'data_en.p','wb'))
     log('Current tweet count: {0}'.format(len(data_de)))
     
     t1 = time.time()
@@ -229,6 +229,17 @@ process_current_wave()
 while len(next_wave) > 0:
     current_wave = next_wave
     next_wave = []
-    process_current_wave()  
+    process_current_wave()
+    
+    
+
+        
+        
+
+    
+
+
+            
+
 
 
