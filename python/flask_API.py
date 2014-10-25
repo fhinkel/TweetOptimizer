@@ -32,13 +32,17 @@ def replacePunctuation(text):
 
 def getRelatedTerms(search_term, level):
     keywords = rel.get_keywords(search_term.lower(), searchtype = level)
-    words = []
-    retweet_ratio = []
+    data = []
     for items in keywords:
-        words.append(items[0])
-        retweet_ratio.append(items[1])
-    dictKeywords = {'terms' : words, 'retweetRatios' : retweet_ratio}
-    return dictKeywords
+        dictValue = {}
+        dictEntry = {}
+        dictValue['tag'] = items[0]
+        dictValue['ratio'] = items[1]
+        dictValue['confidence'] = items[2]
+        dictEntry['term'] = dictValue
+        data.append(dictEntry)
+    
+    return data
 
 @app.route('/relatedHashtags', methods=['OPTIONS', 'GET', 'POST'])
 @crossdomain(origin='*')

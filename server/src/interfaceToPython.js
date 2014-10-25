@@ -30,8 +30,7 @@ var sendRequest = function (postData, path, next) {
 
     req.write(postData);
     req.end();
-}
-
+};
 
 exports.relatedTags = function (hashTag, next) {
     var postData = JSON.stringify({"term": hashTag});
