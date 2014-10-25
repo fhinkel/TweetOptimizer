@@ -137,26 +137,24 @@ print base_path
 
 def cast_status_to_dict(tweepy_status):
     ret = {}
+    print tweepy_status.author
     ret['text'] = tweepy_status.text
     ret['follower_count'] = tweepy_status.author.followers_count
     ret['friends_count'] = tweepy_status.author.friends_count
     ret['retweet_count'] = tweepy_status.retweet_count
     return ret
 
-apis = []
-for i in range(len(ckeys)):
-    auth = OAuthHandler(ckeys[i], csecrets[i])
-    auth.set_access_token(atokens[i], asecrets[i])
-    apis.append(tweepy.API(auth))
-
+auth = OAuthHandler(ckeys[0], csecrets[0])
+auth.set_access_token(atokens[0], asecrets[0])
+api = tweepy.API(auth)
 
 def process_hashtag(query):
     global current_api
     global processed_hashtags    
     global data_de
+    global api
     processed_hashtags[query] = True
-    print query
-    items = tweepy.Cursor(apis[current_api].search, q=hashtag + query,lang='de').items(max_tweets)
+    items = tweepy.Cursor(api.search, q=hashtag + query,lang='de').items(max_tweets)
     i = 0
     last_error = 0
     while True:
@@ -170,7 +168,6 @@ def process_hashtag(query):
                 for match in matches:
                     match = match.lower()
                     if match not in processed_hashtags and match not in next_wave:
-                        log('Added hashtag {0}'.format(match))
                         next_wave.append(match)                 
         except tweepy.TweepError:
             print  traceback.format_exc()
@@ -182,6 +179,9 @@ def process_hashtag(query):
             log('changed to next api key: {}'.format(current_api))
             current_api += 1 
             if current_api >= len(ckeys): current_api = 0
+            auth = OAuthHandler(ckeys[i], csecrets[i])
+            auth.set_access_token(atokens[i], asecrets[i])
+            api = tweepy.API(auth)            
             continue
         except StopIteration:
             print i
@@ -198,10 +198,13 @@ def process_current_wave():
         process_hashtag(current_wave[0])
         processed_hashtags[current_wave[0]] = True
         del current_wave[0]
-        
+        log('Dumping wave data...')
+        pickle.dump(current_wave, open(base_path + 'current_wave.p','wb'))
+        pickle.dump(next_wave, open(base_path + 'next_wave.p','wb'))
         i+=1
         
     log('Dumping data...')
+    
     pickle.dump(processed_hashtags, open(base_path + 'hashtags.p','wb'))
     pickle.dump(data_de, open(base_path + 'data_de.p','wb'))
     log('Current tweet count: {0}'.format(len(data_de)))
@@ -227,17 +230,6 @@ process_current_wave()
 while len(next_wave) > 0:
     current_wave = next_wave
     next_wave = []
-    process_current_wave()
-    
-    
-
-        
-        
-
-    
-
-
-            
-
+    process_current_wave()  
 
 
