@@ -6,8 +6,16 @@ exports.twice = function () {
     return (magicNumber * 2).toString();
 };
 
+var regex = /\S*#(?:\[[^\]]+\]|\S+)/gi;
 getHashTags = function (tweet) {
-    return ['bunte', 'hackathon', 'burda'];
+    var hashtags = [];
+    var resultTemp;
+    // push all matching hashtags to an array
+    while ((resultArray = regex.exec(tweet)) !== null) {
+        hashtags.push(resultArray[0]);
+    }
+    regex.lastIndex = 0; // resets it
+    return hashtags;
 };
 
 exports.getMetric = function (tweet, next) {

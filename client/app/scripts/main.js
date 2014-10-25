@@ -45,15 +45,15 @@ $(document).ready(function () {
     });
 
     socket.on('tweet analysis', function (data) {
-        console.log('we received analysis: ' + data);
+        console.log(data);
         var result = JSON.parse(data);
-        for (var hashtag in result) {
-            if (result.hasOwnProperty(hashtag)) {
-                $('body').append('<br>');
-                $('body').append(hashtag + '<br>');
-                $('body').append('trenddata:' + result.burda.trend.toString() + '<br>');
-            }
-        }
+        // for (var hashtag in result) {
+        //     if (result.hasOwnProperty(hashtag)) {
+        //         $('body').append('<br>');
+        //         $('body').append(hashtag + '<br>');
+        //         $('body').append('trenddata:' + result.burda.trend.toString() + '<br>');
+        //     }
+        // }
     });
 
     socket.on('bunte', function(headline) {
