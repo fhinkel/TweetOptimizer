@@ -1,17 +1,19 @@
 {
-  "name": "hellonode",
-  "scripts": {
-    "start": "node server.js",
-    "test": "mocha tests"
-  },
-  "version": "0.0.0",
-  "dependencies": {
-    "express": "~4.9.8",
-    "jquery": "~2.1.1",
-    "socket.io": "~1.1.0"
-  },
-  "devDependencies": {
-    "should": "~4.1.0",
-    "mocha": "~2.0.0"
-  }
+    "name": "hellonode",
+    "scripts": {
+        "start": "node server.js",
+        "test": "mocha tests",
+        "forever": "forever start -l forever.log -o out.log -e err.log -a server.js",
+        "stop": "killall node"
+    },
+    "version": "0.0.0",
+    "dependencies": {
+        "express": "~4.9.8",
+        "jquery": "~2.1.1",
+        "socket.io": "~1.1.0"
+    },
+    "devDependencies": {
+        "should": "~4.1.0",
+        "mocha": "~2.0.0"
+    }
 }
