@@ -192,9 +192,9 @@ def process_current_wave():
     global current_wave
     i = 0
     while len(current_wave) > 0:   
-        log('Dumping data to {0}'.format(base_path + 'data_de2.p'))       
+        log('Dumping data to {0}'.format(base_path + 'data_de3.p'))       
         pickle.dump(processed_hashtags, open(base_path + 'hashtags.p','wb'))
-        pickle.dump(data_de, open(base_path + 'data_de2.p','wb'))
+        pickle.dump(data_de, open(base_path + 'data_de3.p','wb'))
 
         process_hashtag(current_wave[0])
         processed_hashtags[current_wave[0]] = True
@@ -207,7 +207,7 @@ def process_current_wave():
         
     log('Dumping data...')
     pickle.dump(processed_hashtags, open(base_path + 'hashtags.p','wb'))
-    pickle.dump(data_de, open(base_path + 'data_de2.p','wb'))
+    pickle.dump(data_de, open(base_path + 'data_de3.p','wb'))
     log('Current tweet count: {0}'.format(len(data_de)))
     
     t1 = time.time()
