@@ -62,10 +62,10 @@ window.addEventListener('scroll', function(e) {
     var $headerExpanded = $('header.expanded');
     var $headerSmall = $('header.small');
     if (offset > 50) {
-        $headerExpanded.hide();
+        // $headerExpanded.hide();
         $headerSmall.show();
     } else {
-        $headerExpanded.show();
+        // $headerExpanded.show();
         $headerSmall.hide();
     }
 });
