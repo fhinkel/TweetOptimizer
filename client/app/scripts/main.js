@@ -89,6 +89,27 @@ var renderRelatedUsers = function (data) {
     }));
 };
 
+var renderBunteFeedItem = function (headlines) {
+    var currBunteItem = $("#bunte-item");
+    if (headlines && headlines.length > 0) {
+        console.log('alive!');
+        var source = $('#template-bunte').html();
+        var template = Handlebars.compile(source);
+        var html = template({
+            headlines: headlines
+        });
+        if (currBunteItem.length) {
+            currBunteItem.replaceWith(html);
+        } else {
+            $feed.prepend(html);
+        }
+    } else {
+        if (currBunteItem.length) {
+            currBunteItem.remove();
+        }
+    }
+};
+
 var updateCharCount = function (c) {
     var MAX_CHARS = 140;
     $('#curr-character-count').html(MAX_CHARS - c);
@@ -123,8 +144,8 @@ $(document).ready(function () {
         renderRelatedTags(result);
     });
 
-    socket.on('bunte', function (headline) {
-        // console.log('Bunte Article: ' + headline);
+    socket.on('bunte', function (headlines) {
+        renderBunteFeedItem(headlines);
     })
 });
 

@@ -70,6 +70,11 @@ header > div > h4 {
     border-left-width: 5px;
     border-radius: 3px;
 }
+
+.optimization > h4 {
+    margin-top: 0;
+}
+
 .optimization-hashtag {
     border-left-color: #d9534f;
 }
@@ -78,4 +83,28 @@ header > div > h4 {
 }
 .optimization-social {
     border-left-color: #5bc0de;
+}
+.optimization-bunte {
+    border-left-color: #e30614;
+}
+
+.optimization-bunte > h4 {
+    margin-bottom: 20px;
+}
+
+.optimization-bunte > h4 > span {
+    background-color: #e30614;
+    border-radius: 0.1em;
+}
+
+.optimization-bunte > h5 {
+    margin-bottom: 0;
+}
+
+.optimization-bunte > p {
+    font-style: italic;
+}
+
+.optimization-bunte > p:last-child {
+    margin-bottom: 0;
 }
