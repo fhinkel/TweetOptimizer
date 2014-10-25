@@ -18,7 +18,7 @@ import os
 
 t0 = time.time()
 
-DEBUG = False
+DEBUG = True
 
 config_name = 'debug.txt'
 
@@ -153,6 +153,7 @@ for i in range(len(ckeys)):
 def process_hashtag(query):
     global current_api
     global processed_hashtags    
+    global data_de
     processed_hashtags[query] = True
     print query
     items = tweepy.Cursor(apis[current_api].search, q=hashtag + query,lang='de').items(max_tweets)
