@@ -1,11 +1,7 @@
-var magicNumber = 42;
 
 var getAnalysisForTweetsFromCrawler = require('./interfaceToPython').getAnalysis;
 var relatedTags = require('./interfaceToPython').relatedTags;
-
-exports.twice = function () {
-    return (magicNumber * 2).toString();
-};
+var relatedUsers = require('./interfaceToPython').relatedUsers;
 
 var regex = /\S*#(?:\[[^\]]+\]|\S+)/gi;
 var getHashTags = function (tweet) {
@@ -26,14 +22,26 @@ exports.getMetric = function (tweet, nextTags, nextUsers, nextWords) {
 
         relatedTags(tag, function(error, response) {
             if (error) {
-                console.log('Connection to python interface failed.' + error);
+                console.log('Getting related tags failed.' + error);
                 return;
             }
-            result = {
+            var result = {
                 hashTag: tag,
                 related: response
             };
             nextTags(null, JSON.stringify(result));
+        });
+
+        relatedUsers(tag, function(error, response) {
+            if (error) {
+                console.log('Getting related users failed.' + error);
+                return;
+            }
+            var result = {
+                hashTag: tag,
+                related: response
+            };
+            nextUsers(null, JSON.stringify(result));
         });
     }
 };

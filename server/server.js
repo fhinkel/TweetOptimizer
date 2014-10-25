@@ -19,15 +19,16 @@ io.on('connection', function (socket) {
     console.log('a user connected');
 
     var emitRelatedTags = function (error, tags) {
-        if (error) {
-            console.log("error receiving related tags: " + error);
-        }
         socket.emit('related tags', tags);
+    };
+
+    var emitRelatedUsers = function (error, users) {
+        socket.emit('related users', users);
     };
 
     socket.on('tweet', function (msg) {
         console.log('we received a tweet for analysis: ' + msg);
-        getMetric(msg, emitRelatedTags);
+        getMetric(msg, emitRelatedTags, emitRelatedUsers);
         getBunteHeadline(msg, function(error, headline) {
            if (error) {
                console.log("error pulling Article from Bunte");
@@ -35,8 +36,6 @@ io.on('connection', function (socket) {
                socket.emit('bunte', headline);
            }
         });
-
-
     });
 
     socket.on('disconnect', function () {

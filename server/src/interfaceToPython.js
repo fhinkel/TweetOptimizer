@@ -35,13 +35,12 @@ exports.relatedTags = function (hashTag, next) {
     req.end();
 };
 
-exports.getAnalysis = function (hashtag, next) {
-
-    var postData = JSON.stringify({"term": hashtag});
+exports.relatedUsers = function (hashTag, next) {
+    var postData = JSON.stringify({"term": hashTag});
     var options = {
         hostname: 'localhost',
         port: 5000,
-        path: '/relatedhashtags',
+        path: '/relateduser',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -56,14 +55,17 @@ exports.getAnalysis = function (hashtag, next) {
         });
 
         res.on('end', function () {
-            next(null, data);
+            var result = JSON.parse(data)["terms"];
+            // leave out first result because it is the hashTag
+            next(null, [result[1], result[2], result[3]]);
         })
 
     }).on('error', function (e) {
-        console.log("Got error when trying to communicate with Flask: " + e.message);
+        console.log("Got error when trying to get related users: " + e.message);
         next(e);
     });
 
     req.write(postData);
     req.end();
 };
+

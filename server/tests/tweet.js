@@ -8,7 +8,6 @@ describe('tweet', function () {
             result.should.equal("{\"hashTag\":\"#burda\",\"related\":[\"#kleinanzeigen\",\"#carrosusados\",\"#sevende\"]}");
             next();
         });
-
     });
 
 
