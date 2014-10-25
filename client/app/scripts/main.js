@@ -1,16 +1,22 @@
+var socket = io();
+
+var emitCurrentTweet = function emitCurrentTweet() {
+    console.log('tweet: ' + $("#input").val());
+    socket.emit('tweet', $('#input').val());
+}
+
 $(document).ready(function () {
     console.log('helloo');
 
     $('#input').keyup(function (e) {
         $('#character-count').html(e.target.value.length);
     });
-    var socket = io();
+
     $('#input').keyup(function (e) {
-        if(e.keyCode == 13) {
-            console.log('tweet: ' + $("#input").val());
-            socket.emit('tweet', $('#input').val());
+        if(e.keyCode === 13 || e.keyCode === 32) {
+            emitCurrentTweet();
         }
-    });
+    }); 
 
     socket.on('tweet analysis', function (data) {
         console.log('we received analysis: ' + data);
