@@ -52,7 +52,17 @@
         <div id="feed-container" class="row">
 
         </div>
-
+        <script id="template-bunte" type="text/x-handlebars-template">
+            <div id="bunte-item" class="col-sm-6">
+                <div class="optimization optimization-bunte">
+                    <h4><span class="label">BUNTE</span></h4>
+                    {{#each headlines}}
+                      <h5>{{this.headline}}</h5>
+                      <p>{{this.subheadline}}</p>
+                    {{/each}}
+                </div>
+            </div>
+        </script>
         <script id="template-related-tags" type="text/x-handlebars-template">
             <div class="col-sm-6" data-related-tag="{{hashtag}}">
                 <div class="optimization optimization-hashtag">
