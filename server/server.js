@@ -3,7 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var getMetric = require('./src/tweet').getMetric;
-var getBunteHeadline = require('./src/bunteArticle').getHeadline;
+var getBunteHeadlines = require('./src/bunteArticle').getHeadlines;
 
 app.use(express.static(__dirname + '/../client/app/'));
 
@@ -34,11 +34,11 @@ io.on('connection', function (socket) {
         console.log('we received a tweet for analysis: ' + msg);
         getMetric(msg, emitRelatedTags, emitRelatedUsers, emitRelatedWords);
 
-        getBunteHeadline(msg, function(error, headline) {
+        getBunteHeadlines(msg, function(error, headlines) {
            if (error) {
-               console.log("error pulling Article from Bunte");
+               console.log("error pulling Articles from Bunte");
            } else {
-               socket.emit('bunte', headline);
+               socket.emit('bunte', headlines);
            }
         });
     });
