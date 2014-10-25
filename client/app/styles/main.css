@@ -9,9 +9,15 @@ header.small {
     background: #4099FF;
     width: 100%;
     color: white;
+    text-align: center;
 }
 
-header > div > img {
+header.small > div > img {
+    margin: 10px 0 6px;
+    max-width: 120px;
+}
+
+header.expanded > div > img {
     margin-top: 40px;
     max-width: 320px;
     width: 50%;
@@ -43,10 +49,7 @@ header > div > h4 {
 }
 
 #character-count {
-    margin-top: 5px;
-}
-
-#character-count > span {
+    margin-top: 12px;
     font-weight: bold;
 }
 

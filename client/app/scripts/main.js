@@ -61,7 +61,7 @@ $(document).ready(function () {
 window.addEventListener('scroll', function () {
     var offset = window.pageYOffset;
     var $headerSmall = $('header.small');
-    if (offset > 50) {
+    if (offset > 60) {
         // $headerExpanded.hide();
         $headerSmall.show();
     } else {
