@@ -54,14 +54,13 @@
         </div>
 
         <script id="template-related-tags" type="text/x-handlebars-template">
-            <div class="col-sm-6">
+            <div class="col-sm-6" data-related-tag="{{hashtag}}">
                 <div class="optimization optimization-hashtag">
                     <div class="row">
                         <div class="col-xs-9">
-                            <h4>Ähnliche Hashatgs zu {{hashtag}}</h4>
-                            {{hashtag}} ->
+                            <h4>Ähnliche Hashtags zu {{hashtag}}</h4>
                             {{#each related}}
-                                {{this}}
+                                {{this}} (0.78)
                             {{/each}}
                         </div>
                         <div class="col-xs-3">
@@ -74,7 +73,7 @@
             </div>
         </script>
         <script id="template-related-users" type="text/x-handlebars-template">
-            <div class="col-sm-6">
+            <div class="col-sm-6" data-related-user="{{hashtag}}">
                 <div class="optimization optimization-social">
                     <div class="row">
                         <div class="col-xs-9">
@@ -98,6 +97,9 @@
         <script src="bower_components/jquery/dist/jquery.js"></script>
         <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
         <script src="bower_components/handlebars/handlebars.js"></script>
+        <script src="bower_components/handlebars/handlebars.js"></script>
+        <script src="bower_components/d3/d3.js"></script>
+        <script src="bower_components/c3/c3.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 

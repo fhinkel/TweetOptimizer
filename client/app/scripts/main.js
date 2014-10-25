@@ -6,20 +6,27 @@ var emitCurrentTweet = function () {
 
 var $feed = $('#feed-container');
 var renderRelatedTags = function (data) {
+    // if we alrdy have it or got no content, bail.
+    console.log(!!data.related[0]);
+    if ($("[data-related-tag='" + data.hashTag + "']").length ||
+        !data.related[0]) {
+        return;
+    }
     var source = $('#template-related-tags').html();
     var template = Handlebars.compile(source);
-    console.log(data);
-    console.log(data.hashTag, data.related);
     $feed.append(template({
         hashtag: data.hashTag,
         related: data.related
     }));
 };
 var renderRelatedUsers = function (data) {
+    // if we alrdy have it or we got no content, bail.
+    if ($("[data-related-user='" + data.hashTag + "']").length ||
+        !data.related[0]) {
+        return;
+    }
     var source = $('#template-related-users').html();
     var template = Handlebars.compile(source);
-    console.log(data);
-    console.log(data.hashTag, data.related);
     $feed.append(template({
         hashtag: data.hashTag,
         related: data.related
@@ -61,7 +68,7 @@ $(document).ready(function () {
     });
 
     socket.on('bunte', function (headline) {
-        console.log('Bunte Article: ' + headline);
+        // console.log('Bunte Article: ' + headline);
     })
 });
 
