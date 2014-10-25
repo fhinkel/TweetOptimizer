@@ -7,8 +7,6 @@ exports.getHeadline = function(headline, next) {
     var title = "Schlechteste Quote aller Zeiten!";
 
     getBunteData(function(error, data) {
-        console.log(data);
-
         next( null, headline + ' ' + title);
     });
 
