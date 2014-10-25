@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var analyzeTweet = require('./src/tweet').twice;
+var getMetric = require('./src/tweet').getMetric;
 
 app.use(express.static(__dirname + '/public'));
 
@@ -17,7 +17,7 @@ io.on('connection', function (socket) {
 
     socket.on('tweet', function(msg){
         console.log('we received a tweet for analysis: ' + msg);
-        var metric = '{ "score": "high" }';
+        var metric = getMetric(msg);
         socket.emit('tweet analysis', metric);
     });
 
