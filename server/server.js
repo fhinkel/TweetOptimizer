@@ -1,10 +1,12 @@
 var express = require('express');
+var favicon = require('serve-favicon');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var getMetric = require('./src/tweet').getMetric;
 var getBunteHeadlines = require('./src/bunteArticle').getHeadlines;
 
+app.use(favicon(__dirname + '/../client/app/images/favicon.ico'));
 app.use(express.static(__dirname + '/../client/app/'));
 
 console.log(__dirname + '/../client/app/');
@@ -14,6 +16,8 @@ app.get('/tweet', function (req, res) {
     console.log("we received a tweet:" + data);
     res.send(analyzeTweet(data));
 });
+
+
 
 io.on('connection', function (socket) {
     console.log('a user connected');
