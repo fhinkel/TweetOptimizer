@@ -16,7 +16,7 @@ $(document).ready(function () {
         if(e.keyCode === 13 || e.keyCode === 32) {
             emitCurrentTweet();
         }
-    }); 
+    });
 
     socket.on('tweet analysis', function (data) {
         console.log('we received analysis: ' + data);
@@ -35,7 +35,7 @@ window.addEventListener('scroll', function(e) {
     var offset = window.pageYOffset;
     var $headerExpanded = $('header.expanded');
     var $headerSmall = $('header.small');
-    if (offset > 40) {
+    if (offset > 50) {
         $headerExpanded.hide();
         $headerSmall.show();
     } else {
