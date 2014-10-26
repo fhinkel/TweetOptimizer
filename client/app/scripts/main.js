@@ -8,7 +8,7 @@ var $feed = $('#feed-container');
 var renderRelatedTags = function (data) {
     // if we alrdy have it or got no content, bail.
     if ($("[data-related-tag='" + data.hashTag + "']").length ||
-        !data.related[0]) {
+        (!data.related[0] && !data.related[1] && !data.related[2]) ) {
         return;
     }
     var source = $('#template-related-tags').html();
@@ -81,7 +81,7 @@ var renderRelatedTags = function (data) {
 var renderRelatedUsers = function (data) {
     // if we alrdy have it or we got no content, bail.
     if ($("[data-related-user='" + data.hashTag + "']").length ||
-        !data.related[0]) {
+        data.related.length !== 3) {
         return;
     }
     var source = $('#template-related-users').html();
