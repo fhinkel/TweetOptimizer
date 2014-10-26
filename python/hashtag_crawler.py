@@ -224,7 +224,7 @@ else: data_de = []
 
 if os.path.isfile(base_path + 'current_wave.p'):
     current_wave = pickle.load(open(base_path + 'current_wave.p','r'))
-else: current_wave = ['burdahackday'] 
+else: current_wave = ['hackday'] 
 
 if os.path.isfile(base_path + 'next_wave.p'):
     next_wave = pickle.load(open(base_path + 'next_wave.p','r'))
