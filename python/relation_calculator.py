@@ -59,24 +59,30 @@ class Relation_Calculator():
             cos_dist.append(distance.cosine(self.X[j],word_value))
         nearest = np.array(cos_dist).argsort()[1:100] 
         
-        for idx in nearest:
+        values = 1.0 - np.array(cos_dist)[nearest]
+        min = np.min(values)
+        max = np.max(values-min) 
+        max = max if max > 0 else 1.0
+        values = (values-min)/max
+        
+        for i, idx in enumerate(nearest):
             word = self.idx_dict[idx]
             retweet_ratio = 0.0
             if word.lower() in self.word_to_retweet_ratio:
                 retweet_ratio = self.word_to_retweet_ratio[word.lower()]
             if searchtype == 0:
                 if '#' in word:
-                    words.append([word, retweet_ratio, cos_dist[idx]])
+                    words.append([word, retweet_ratio, values[i]])
 
             elif searchtype == 1:
                 if '@' in word:
-                    words.append([word, retweet_ratio, cos_dist[idx]])
+                    words.append([word, retweet_ratio, values[i]])
                     
             elif searchtype == 2:
                 if '@' not in word and '#' not in word:
-                    words.append([word, retweet_ratio, cos_dist[idx]])
+                    words.append([word, retweet_ratio, values[i]])
             else:
-                words.append([word,retweet_ratio, cos_dist[idx]])
+                words.append([word,retweet_ratio, values[i]])
                 
         return words
 
