@@ -17,6 +17,9 @@
 
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="icon" 
+      type="image/png" 
+      href="images/fav.png">
     <!-- endbuild -->
 </head>
 
@@ -35,7 +38,7 @@
     </header>
     <div class="container main">
         <div class="form-group">
-            <textarea class="form-control" id="input" rows="3"></textarea>
+            <textarea class="form-control" id="input" rows="3" placeholder="Schreibe einen Tweet..."></textarea>
             <div class="row">
                 <div class="col-xs-6">
                     <p id="character-count">
@@ -50,90 +53,117 @@
                 n optimizations
             </p>
         </div>
-        <div id="feed-container" class="row">
+        <div id="feed-container" class="row"></div>
+    </div>
 
+    <!-- About Dialog -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">About <b>tweetimizer</b></h4>
+          </div>
+          <div class="modal-body">
+            <img src="images/about.png">
+          </div>
         </div>
-        <script id="template-bunte" type="text/x-handlebars-template">
-            <div id="bunte-item" class="col-sm-6">
-                <div class="optimization optimization-bunte">
-                    <h4><span class="label">BUNTE</span></h4>
-                    {{#each headlines}}
-                      <h5>{{this.headline}}</h5>
-                      <p>> {{this.subheadline}}</p>
-                    {{/each}}
-                </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        by 
+        <a href="https://twitter.com/tim_dettmers">@tim_dettmers</a>, 
+        <a href="https://twitter.com/fhinkel">@fhinkel</a>, 
+        <a href="https://twitter.com/_dotch">@_dotch</a>, 
+        <a href="https://twitter.com/patbuergin">@patbuergin</a>, 
+        <a href="https://twitter.com/veraliebt">@veraliebt</a>
+        <span class="delimiter">|</span> 
+        <a  data-toggle="modal" data-target="#myModal">About</a>
+      </div>
+    </footer>
+    <script id="template-bunte" type="text/x-handlebars-template">
+        <div id="bunte-item" class="col-sm-6">
+            <div class="optimization optimization-bunte">
+                <h4><span class="label">BUNTE</span></h4>
+                {{#each headlines}}
+                  <h5>{{this.headline}}</h5>
+                  <p>> {{this.subheadline}}</p>
+                {{/each}}
             </div>
-        </script>
-        <script id="template-related-tags" type="text/x-handlebars-template">
-            <div class="col-sm-6" data-related-tag="{{hashtag}}">
-                <div class="optimization optimization-hashtag">
-                    <h4>Ähnliche Hashtags zu {{hashtag}}</h4>
-                    <div class="row">
-                        <div class="col-xs-4">
-                            <div class="chart">
-                                <!-- insert chart here -->
-                                graph
+        </div>
+    </script>
+    <script id="template-related-tags" type="text/x-handlebars-template">
+        <div class="col-sm-6" data-related-tag="{{hashtag}}">
+            <div class="optimization optimization-hashtag">
+                <h4>Ähnliche Hashtags zu {{hashtag}}</h4>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="chart">
+                            <!-- insert chart here -->
+                            graph
+                        </div>
+                    </div>
+                    <div class="col-xs-8">
+                        {{#each related}}
+                            <div class="clearfix">
+                                {{this.tag}}
+                                <button class="btn btn-default btn-xs pull-right">add</button>
+                                <button class="btn btn-default btn-xs pull-right">replace</button>
                             </div>
-                        </div>
-                        <div class="col-xs-8">
-                            {{#each related}}
-                                <div class="clearfix">
-                                    {{this.tag}}
-                                    <button class="btn btn-default btn-xs pull-right">add</button>
-                                    <button class="btn btn-default btn-xs pull-right">replace</button>
-                                </div>
-                            {{/each}}
-                        </div>
+                        {{/each}}
                     </div>
                 </div>
             </div>
-        </script>
-        <script id="template-related-users" type="text/x-handlebars-template">
-            <div class="col-sm-6" data-related-user="{{hashtag}}">
-                <div class="optimization optimization-social">
-                    <h4>Einflussreiche Nutzer zum Thema {{hashtag}}</h4>
-                    <div class="chart">
-                        <!-- insert chart here -->
-                        graph
-                    </div>
-                    {{#each related}}
-                        {{this.tag}}
-                    {{/each}}
+        </div>
+    </script>
+    <script id="template-related-users" type="text/x-handlebars-template">
+        <div class="col-sm-6" data-related-user="{{hashtag}}">
+            <div class="optimization optimization-social">
+                <h4>Einflussreiche Nutzer zum Thema {{hashtag}}</h4>
+                <div class="chart">
+                    <!-- insert chart here -->
+                    graph
                 </div>
+                {{#each related}}
+                    {{this.tag}}
+                {{/each}}
             </div>
-        </script>
+        </div>
+    </script>
 
-        <!-- build:js scripts/vendor.js -->
-        <!-- bower:js -->
-        <script src="bower_components/jquery/dist/jquery.js"></script>
-        <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="bower_components/handlebars/handlebars.js"></script>
-        <script src="bower_components/handlebars/handlebars.js"></script>
-        <script src="bower_components/d3/d3.js"></script>
-        <script src="bower_components/c3/c3.js"></script>
-        <!-- endbower -->
-        <!-- endbuild -->
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/handlebars/handlebars.js"></script>
+    <script src="bower_components/handlebars/handlebars.js"></script>
+    <script src="bower_components/d3/d3.js"></script>
+    <script src="bower_components/c3/c3.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
 
-        <!-- build:js scripts/plugins.js -->
-        <script src="bower_components/bootstrap/js/affix.js"></script>
-        <script src="bower_components/bootstrap/js/alert.js"></script>
-        <script src="bower_components/bootstrap/js/dropdown.js"></script>
-        <script src="bower_components/bootstrap/js/tooltip.js"></script>
-        <script src="bower_components/bootstrap/js/modal.js"></script>
-        <script src="bower_components/bootstrap/js/transition.js"></script>
-        <script src="bower_components/bootstrap/js/button.js"></script>
-        <script src="bower_components/bootstrap/js/popover.js"></script>
-        <script src="bower_components/bootstrap/js/carousel.js"></script>
-        <script src="bower_components/bootstrap/js/scrollspy.js"></script>
-        <script src="bower_components/bootstrap/js/collapse.js"></script>
-        <script src="bower_components/bootstrap/js/tab.js"></script>
-        <!-- endbuild -->
+    <!-- build:js scripts/plugins.js -->
+    <script src="bower_components/bootstrap/js/affix.js"></script>
+    <script src="bower_components/bootstrap/js/alert.js"></script>
+    <script src="bower_components/bootstrap/js/dropdown.js"></script>
+    <script src="bower_components/bootstrap/js/tooltip.js"></script>
+    <script src="bower_components/bootstrap/js/modal.js"></script>
+    <script src="bower_components/bootstrap/js/transition.js"></script>
+    <script src="bower_components/bootstrap/js/button.js"></script>
+    <script src="bower_components/bootstrap/js/popover.js"></script>
+    <script src="bower_components/bootstrap/js/carousel.js"></script>
+    <script src="bower_components/bootstrap/js/scrollspy.js"></script>
+    <script src="bower_components/bootstrap/js/collapse.js"></script>
+    <script src="bower_components/bootstrap/js/tab.js"></script>
+    <!-- endbuild -->
 
-        <script src="/socket.io/socket.io.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
 
-        <!-- build:js scripts/main.js -->
-        <script src="scripts/main.js"></script>
-        <!-- endbuild -->
+    <!-- build:js scripts/main.js -->
+    <script src="scripts/main.js"></script>
+    <!-- endbuild -->
 </body>
 
 </html>
