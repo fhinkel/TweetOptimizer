@@ -1,10 +1,11 @@
 {
-    "name": "tweetimizer",
+    "name": "Tweetimizer",
     "description": "Optimize your tweet for more impact",
     "scripts": {
-        "start": "node server.js",
-        "test": "mocha tests",
-        "forever": "./node_modules/.bin/forever start -l forever.log -a server.js;",
+        "start": "node server/server.js",
+        "build": "cd client && ./../node_modules/.bin/bower install",
+        "test": "mocha server/tests",
+        "forever": "./node_modules/.bin/forever start -l forever.log -a server/server.js;",
         "stop": "killall node"
     },
     "version": "0.9.1",
@@ -19,18 +20,22 @@
         "type": "git",
         "url": "https://github.com/fhinkel/TweetOptimizer.git"
     },
-    "main": "server.js",
+    "main": "server/server.js",
     "dependencies": {
         "express": "~4.9.8",
         "jquery": "~2.1.1",
         "socket.io": "~1.1.0",
         "forever": "~0.11.1",
-        "serve-favicon": "~2.1.6",
-        "expect": "~0.1.1"
+        "serve-favicon": "~2.1.6"
     },
     "devDependencies": {
         "should": "~4.1.0",
-        "mocha": "~2.0.0"
+        "mocha": "~2.0.0",
+        "bower": "~1.3.12",
+        "expect": "~0.1.1"
+    },
+    "engines": {
+        "node": ">=0.10.0"
     },
     "license": "MIT"
 }
