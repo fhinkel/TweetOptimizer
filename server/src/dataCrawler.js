@@ -5,7 +5,8 @@ var crawler = function () {
     var filterFirstThreeResults = function (data, n, next) {
         var result = JSON.parse(data);
         var results = [];
-        for (var i=0; i<n; i = i+1) {
+        var upToN = Math.min(result.length, n);
+        for (var i = 0; i < upToN; i = i + 1) {
             results.push(result[i]);
         }
         next(null, results);
@@ -54,7 +55,14 @@ var crawler = function () {
         var postData = JSON.stringify({"term": hashTag});
         var path = '/relatedUsers';
         var nextWithFilter = function (data) {
-            filterFirstThreeResults(data, 3, next);
+            var addImage = function (error, data) {
+                data[0].imageUrl = "https://pbs.twimg.com/profile_images/1195885497/yo_400x400.JPG";
+                for (var i = 1; i < data.length; i = i + 1) {
+                    data[i].imageUrl = "https://pbs.twimg.com/profile_images/461031157157462016/3nZogZZ9_400x400.png";
+                }
+                next(null, data);
+            };
+            filterFirstThreeResults(data, 3, addImage);
         };
         sendRequest(postData, path, nextWithFilter);
     };
