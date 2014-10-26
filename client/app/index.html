@@ -17,8 +17,8 @@
 
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
-    <link rel="icon" 
-      type="image/png" 
+    <link rel="icon"
+      type="image/png"
       href="images/fav.png">
     <!-- endbuild -->
 </head>
@@ -73,18 +73,18 @@
 
     <footer>
       <div class="container">
-        by 
-        <a href="https://twitter.com/tim_dettmers">@tim_dettmers</a>, 
-        <a href="https://twitter.com/fhinkel">@fhinkel</a>, 
-        <a href="https://twitter.com/_dotch">@_dotch</a>, 
-        <a href="https://twitter.com/patbuergin">@patbuergin</a>, 
+        by
+        <a href="https://twitter.com/tim_dettmers">@tim_dettmers</a>,
+        <a href="https://twitter.com/fhinkel">@fhinkel</a>,
+        <a href="https://twitter.com/_dotch">@_dotch</a>,
+        <a href="https://twitter.com/patbuergin">@patbuergin</a>,
         <a href="https://twitter.com/veraliebt">@veraliebt</a>
-        <span class="delimiter">|</span> 
+        <span class="delimiter">|</span>
         <a  href="#" data-toggle="modal" data-target="#myModal">About</a>
       </div>
     </footer>
     <script id="template-bunte" type="text/x-handlebars-template">
-        <div id="bunte-item" class="col-sm-6">
+        <div id="bunte-item" class="col-sm-6 opti-container">
             <div class="optimization optimization-bunte">
                 <h4><span class="label">BUNTE</span></h4>
                 {{#each headlines}}
@@ -95,14 +95,13 @@
         </div>
     </script>
     <script id="template-related-tags" type="text/x-handlebars-template">
-        <div class="col-sm-6" data-related-tag="{{hashtag}}">
+        <div class="col-sm-6 opti-container" data-related-tag="{{hashtag}}">
             <div class="optimization optimization-hashtag">
                 <h4>Ähnliche Hashtags zu {{hashtag}}</h4>
                 <div class="row">
                     <div class="col-xs-4">
                         <div class="chart">
                             <!-- insert chart here -->
-                            graph
                         </div>
                     </div>
                     <div class="col-xs-8">
@@ -111,10 +110,10 @@
                         <li class="list-group-item">
                             <div class="hashtag-recomm clearfix">
                                 <span>{{this.tag}}</span>
-                                <button class="btn btn-default btn-xs pull-right">
-                                    <span class="glyphicon glyphicon-refresh"></span>
+                                <button class="btn btn-default pull-right">
+                                    <span class="glyphicon glyphicon-transfer"></span>
                                 </button>
-                                <button class="btn btn-default btn-xs pull-right">
+                                <button class="btn btn-default pull-right">
                                     <span class="glyphicon glyphicon-plus"></span>
                                 </button>
                             </div>
@@ -127,16 +126,24 @@
         </div>
     </script>
     <script id="template-related-users" type="text/x-handlebars-template">
-        <div class="col-sm-6" data-related-user="{{hashtag}}">
+        <div class="col-sm-6 opti-container" data-related-user="{{hashtag}}">
             <div class="optimization optimization-social">
                 <h4>Einflussreiche Nutzer zum Thema {{hashtag}}</h4>
-                <div class="chart">
-                    <!-- insert chart here -->
-                    graph
+                <div class="row">
+                    <div class="col-xs-4">
+                        <div class="chart">
+                            <!-- insert chart here -->
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        {{#each related}}
+                            <div>
+                                <img src="{{this.imageUrl}}">
+                                <a href="http://twitter.com/{{this.tag}}">{{this.tag}}</a>
+                            </div>
+                        {{/each}}
+                    </div>
                 </div>
-                {{#each related}}
-                    {{this.tag}}
-                {{/each}}
             </div>
         </div>
     </script>

@@ -1,41 +1,54 @@
 {
-    "name": "Tweetimizer",
-    "description": "Optimize your tweet for more impact",
-    "scripts": {
-        "start": "node server/server.js",
-        "build": "./node_modules/.bin/bower install",
-        "test": "mocha server/tests",
-        "forever": "./node_modules/.bin/forever start -l forever.log -a server/server.js;",
-        "stop": "killall node"
+  "name": "Tweetimizer",
+  "description": "Optimize your tweet for more impact",
+  "scripts": {
+    "start": "node server/server.js",
+    "build": "./node_modules/.bin/bower install",
+    "test": "mocha server/tests",
+    "forever": "./node_modules/.bin/forever start -l forever.log -a server/server.js;",
+    "stop": "killall node"
+  },
+  "version": "0.9.1",
+  "contributors": [
+    {
+      "name": "Franziska Hinkelmann",
+      "email": "fhinkel@vt.edu"
     },
-    "version": "0.9.1",
-    "contributors": [
-        {"name": "Franziska Hinkelmann", "email": "fhinkel@vt.edu"},
-        {"name": "@tim_dettmers"},
-        {"name": "@_dotch"},
-        {"name": "@patbuergin"},
-        {"name": "@veraliebt"}
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/fhinkel/TweetOptimizer.git"
+    {
+      "name": "@tim_dettmers"
     },
-    "main": "server/server.js",
-    "dependencies": {
-        "express": "~4.9.8",
-        "jquery": "~2.1.1",
-        "socket.io": "~1.1.0",
-        "forever": "~0.11.1",
-        "serve-favicon": "~2.1.6"
+    {
+      "name": "@_dotch"
     },
-    "devDependencies": {
-        "should": "~4.1.0",
-        "mocha": "~2.0.0",
-        "bower": "~1.3.12",
-        "expect": "~0.1.1"
+    {
+      "name": "@patbuergin"
     },
-    "engines": {
-        "node": ">=0.10.0"
-    },
-    "license": "MIT"
+    {
+      "name": "@veraliebt"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fhinkel/TweetOptimizer.git"
+  },
+  "main": "server/server.js",
+  "dependencies": {
+    "express": "~4.9.8",
+    "jquery": "~2.1.1",
+    "socket.io": "~1.1.0",
+    "forever": "~0.11.1",
+    "serve-favicon": "~2.1.6",
+    "async": "~0.9.0",
+    "twit": "~1.1.18"
+  },
+  "devDependencies": {
+    "should": "~4.1.0",
+    "mocha": "~2.0.0",
+    "bower": "~1.3.12",
+    "expect": "~0.1.1"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "license": "MIT"
 }

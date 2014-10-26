@@ -7,14 +7,13 @@ var emitCurrentTweet = function () {
 var $feed = $('#feed-container');
 var renderRelatedTags = function (data) {
     // if we alrdy have it or got no content, bail.
-    console.log(!!data.related[0]);
     if ($("[data-related-tag='" + data.hashTag + "']").length ||
-        !data.related[0]) {
+        (!data.related[0] && !data.related[1] && !data.related[2]) ) {
         return;
     }
     var source = $('#template-related-tags').html();
     var template = Handlebars.compile(source);
-    $feed.append(template({
+    $feed.prepend(template({
         hashtag: data.hashTag,
         related: data.related
     }));
@@ -34,7 +33,7 @@ var renderRelatedTags = function (data) {
         },
         bar: {
             width: {
-                ratio: 0.8 // this makes bar width 33% of length between ticks
+                ratio: 0.8
             }
         },
         padding: { left: 0, right: 0, top: 0, bottom: 0 },
@@ -70,26 +69,84 @@ var renderRelatedTags = function (data) {
     setTimeout(function () {
         chart.load({
             columns: [
-                [data.related[0].tag, 130],
-                [data.related[1].tag, 100],
-                [data.related[2].tag, 90]
+                [data.related[0].tag, data.related[0].ratio],
+                [data.related[1].tag, data.related[1].ratio],
+                [data.related[2].tag, data.related[2].ratio]
             ],
         });
     }, 1);
 
 };
+
 var renderRelatedUsers = function (data) {
     // if we alrdy have it or we got no content, bail.
     if ($("[data-related-user='" + data.hashTag + "']").length ||
-        !data.related[0]) {
+        data.related.length !== 3) {
         return;
     }
     var source = $('#template-related-users').html();
     var template = Handlebars.compile(source);
-    $feed.append(template({
+    $feed.prepend(template({
         hashtag: data.hashTag,
         related: data.related
     }));
+    // get the dom node for c3
+    var chartNode = $("[data-related-user='" + data.hashTag + "'] .chart")[0] ;
+    var chart = c3.generate({
+        bindto: chartNode,
+        color: { pattern: ['#f1716e', '#55acee', '#b9bb30'] },
+        data: {
+            columns: [
+                [data.related[0].tag, 0],
+                [data.related[1].tag, 0],
+                [data.related[2].tag, 0]
+            ],
+            type: 'bar'
+        },
+        bar: {
+            width: {
+                ratio: 0.8
+            }
+        },
+        padding: { left: 0, right: 0, top: 0, bottom: 0 },
+        interaction: false,
+        axis: {
+            x: {
+                tick: {
+                    format: function(){return null;}
+                }
+            },
+            y: {
+                // label: 'Beliebtheit',
+                tick: {
+                    format: function(){return null;}
+                }
+            }
+        },
+        legend: {
+            show: false
+        },
+        tooltip: {
+            show: false
+        },
+        size: {
+            height: 120
+        },
+        transition: {
+            duration: 1000
+        }
+    });
+    // load data with delay
+    // to get bar chart animations for patrick
+    setTimeout(function () {
+        chart.load({
+            columns: [
+                [data.related[0].tag, data.related[0].ratio],
+                [data.related[1].tag, data.related[1].ratio],
+                [data.related[2].tag, data.related[2].ratio]
+            ],
+        });
+    }, 1);
 };
 
 var renderBunteFeedItem = function (headlines) {
@@ -141,6 +198,12 @@ $(document).ready(function () {
         console.log('we received related tags: ' + data);
         var result = JSON.parse(data);
         renderRelatedTags(result);
+    });
+
+    socket.on('related words', function (data) {
+        console.log('we received related words: ' + data);
+        var result = JSON.parse(data);
+        // renderRelatedWords(result);
     });
 
     socket.on('bunte', function (headlines) {

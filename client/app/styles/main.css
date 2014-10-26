@@ -143,6 +143,14 @@ textarea.form-control:focus {
 .optimization-social {
     border-left-color: #5bc0de;
 }
+.optimization-social img {
+    width: 24px;
+}
+
+.opti-container {
+    min-height: 250px;
+}
+
 .optimization-bunte {
     border-left-color: #e30614;
 }
