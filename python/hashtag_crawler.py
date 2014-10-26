@@ -182,7 +182,7 @@ def process_hashtag(query):
                 log('Recurrent rate error. Going to sleep now...')
             last_error = i
             current_api += 1             
-            log('changed to next api key: {data_de = []0}'.format(current_api))
+            log('changed to next api key: {0}'.format(current_api))
             if current_api >= len(ckeys): current_api = 0
             continue
         except StopIteration:
