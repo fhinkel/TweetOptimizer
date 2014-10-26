@@ -99,6 +99,14 @@ textarea.form-control:focus {
     font-weight: bold;
 }
 
+@media (max-width: 768px) {
+    #character-count {
+        text-align: right;
+        margin-top: 7px;
+        font-size: 11px;
+    }
+}
+
 #clipbtn {
     margin-top: 5px;
     margin-bottom: 5px;
