@@ -22,7 +22,10 @@ print out
 
 
 data = pickle.load(open('/home/tim/data/hackday/data_de.p','r'))
-
+data2 = pickle.load(open('/home/tim/data/hackday/data_de2.p','r'))
+data3 = pickle.load(open('/home/tim/data/hackday/data_de3.p','r'))
+data = data + data2 + data3
+print len(data2)
 print len(data)
 
 print data[0].keys()
@@ -31,6 +34,7 @@ print data[0].keys()
 word_retweet_count = {}
 word_count = {}
 processed_tweets = []
+overall_word_count = {}
 for item in data:    
     text = item['text']
     text = http_regex.sub('',text)    
@@ -39,7 +43,10 @@ for item in data:
     processed_tweets.append(text.lower().strip())
     
     for word in text.split(' '):
-        if any(x.isupper() for x in word): 
+        if word.lower() not in overall_word_count: overall_word_count[word.lower()] = 1
+        else: overall_word_count[word.lower()] +=1
+        if True:
+        #if any(x.isupper() for x in word): 
             if word not in word_retweet_count:
                 word_retweet_count[word] = item['retweet_count']
                 word_count[word] = 1
@@ -55,7 +62,7 @@ sorted_words = sorted(word_retweet_count.items(), key=operator.itemgetter(1),rev
 
 word_to_retweet_ratio = {}
 for pair in sorted_words:
-    if word_count[pair[0]] > 10:    
+    if word_count[pair[0]] > 0:    
         if pair[0].lower() not in stopwords and pair[1] > 10 and len(pair[0]) > 3:
             print pair, word_count[pair[0]]
             word_to_retweet_ratio[pair[0]] = pair[1]/float(word_count[pair[0]])
@@ -63,6 +70,7 @@ for pair in sorted_words:
             
 print len(word_to_retweet_ratio.keys())
 pickle.dump(word_to_retweet_ratio,open('word_retweet_ratio.p','wb'))
+pickle.dump(overall_word_count,open('word_counts.p','wb'))
     
 with open('/home/tim/trunk/processed_tweets.txt','wb') as f:
     for tweet in processed_tweets:
