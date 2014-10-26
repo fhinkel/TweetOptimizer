@@ -220,7 +220,7 @@ processed_hashtags = {}
 
 if os.path.isfile(base_path + 'current_wave.p'):
     current_wave = pickle.load(open(base_path + 'current_wave.p','r'))
-else: current_wave = ['royals','gamergate','aufschrei','tinder','fml','ebola'] 
+else: current_wave = ['isis','bauchnabel','yolo'] 
 
 if os.path.isfile(base_path + 'next_wave.p'):
     next_wave = pickle.load(open(base_path + 'next_wave.p','r'))
@@ -232,7 +232,7 @@ else: processed_hashtags = {}
 
 hashtag_rex = re.compile('(?<=^|(?<=[^a-zA-Z0-9-_\.]))#([A-Za-z]+[A-Za-z0-9]+)')
  
-max_tweets = 200
+max_tweets = 100
 data_en = []
 unique_tweets = {}
 hashtag = '%23'

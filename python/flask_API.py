@@ -35,12 +35,10 @@ def getRelatedTerms(search_term, level):
     data = []
     for items in keywords:
         dictValue = {}
-        dictEntry = {}
         dictValue['tag'] = items[0]
         dictValue['ratio'] = items[1]
         dictValue['confidence'] = items[2]
-        dictEntry['term'] = dictValue
-        data.append(dictEntry)
+        data.append(dictValue)
     
     return data
 

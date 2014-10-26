@@ -1,7 +1,7 @@
 var should = require('should');
 var getAnalysis= require('../src/bunteArticle').getHeadline;
 
-describe('tweet', function () {
+describe('bunteArticle#getAnalysis', function () {
 
     it('return a headline', function (next) {
         getAnalysis("tweet", function(error, response) {
