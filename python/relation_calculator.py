@@ -57,7 +57,7 @@ class Relation_Calculator():
             
         for j in range(self.X.shape[0]):
             cos_dist.append(distance.cosine(self.X[j],word_value))
-        nearest = np.array(cos_dist).argsort()[0:100] 
+        nearest = np.array(cos_dist).argsort()[1:100] 
         
         for idx in nearest:
             word = self.idx_dict[idx]
