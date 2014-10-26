@@ -6,7 +6,7 @@ var io = require('socket.io')(http);
 var getMetric = require('./src/tweet').getMetric;
 var getBunteHeadlines = require('./src/bunteArticle').getHeadlines;
 
-app.use(favicon(__dirname + '/../client/app/images/favicon.ico'));
+app.use(favicon(__dirname + '/../client/app/favicon.ico'));
 app.use(express.static(__dirname + '/../client/app/'));
 
 app.get('/tweet', function (req, res) {
