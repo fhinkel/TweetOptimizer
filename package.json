@@ -3,7 +3,7 @@
     "description": "Optimize your tweet for more impact",
     "scripts": {
         "start": "node server/server.js",
-        "build": "cd client && ./../node_modules/.bin/bower install",
+        "build": "./node_modules/.bin/bower install",
         "test": "mocha server/tests",
         "forever": "./node_modules/.bin/forever start -l forever.log -a server/server.js;",
         "stop": "killall node"
