@@ -18,6 +18,65 @@ var renderRelatedTags = function (data) {
         hashtag: data.hashTag,
         related: data.related
     }));
+    // http://c3js.org/samples/chart_bar.html
+    // get the dom node for c3
+    var chartNode = $("[data-related-tag='" + data.hashTag + "'] .chart")[0] ;
+    var chart = c3.generate({
+        bindto: chartNode,
+        color: { pattern: ['#f1716e', '#55acee', '#b9bb30'] },
+        data: {
+            columns: [
+                [data.related[0].tag, 0],
+                [data.related[1].tag, 0],
+                [data.related[2].tag, 0]
+            ],
+            type: 'bar'
+        },
+        bar: {
+            width: {
+                ratio: 0.8 // this makes bar width 33% of length between ticks
+            }
+        },
+        padding: { left: 0, right: 0, top: 0, bottom: 0 },
+        interaction: false,
+        axis: {
+            x: {
+                tick: {
+                    format: function(){return null;}
+                }
+            },
+            y: {
+                // label: 'Beliebtheit',
+                tick: {
+                    format: function(){return null;}
+                }
+            }
+        },
+        legend: {
+            show: false
+        },
+        tooltip: {
+            show: false
+        },
+        size: {
+            height: 120
+        },
+        transition: {
+            duration: 1000
+        }
+    });
+    // load data with delay
+    // to get bar chart animations for patrick
+    setTimeout(function () {
+        chart.load({
+            columns: [
+                [data.related[0].tag, 130],
+                [data.related[1].tag, 100],
+                [data.related[2].tag, 90]
+            ],
+        });
+    }, 1);
+
 };
 var renderRelatedUsers = function (data) {
     // if we alrdy have it or we got no content, bail.
@@ -33,19 +92,36 @@ var renderRelatedUsers = function (data) {
     }));
 };
 
+var renderBunteFeedItem = function (headlines) {
+    var currBunteItem = $("#bunte-item");
+    if (headlines && headlines.length > 0) {
+        console.log('alive!');
+        var source = $('#template-bunte').html();
+        var template = Handlebars.compile(source);
+        var html = template({
+            headlines: headlines.slice(0,3)
+        });
+        if (currBunteItem.length) {
+            currBunteItem.replaceWith(html);
+        } else {
+            $html = $(html);
+            console.log($html);
+            $html.hide().appendTo($feed).fadeIn(200);
+            // $feed.prepend(html);
+        }
+    } else {
+        if (currBunteItem.length) {
+            currBunteItem.remove();
+        }
+    }
+};
+
 var updateCharCount = function (c) {
     var MAX_CHARS = 140;
     $('#curr-character-count').html(MAX_CHARS - c);
 };
 
 $(document).ready(function () {
-
-    // render a testItem
-    // renderOptimization({
-    //     originalHashtag: 'Peter',
-    //     newHashtag: 'Hans',
-    // }, '#template');
-
     $('#input').keyup(function (e) {
         updateCharCount(e.target.value.length);
 
@@ -67,8 +143,8 @@ $(document).ready(function () {
         renderRelatedTags(result);
     });
 
-    socket.on('bunte', function (headline) {
-        // console.log('Bunte Article: ' + headline);
+    socket.on('bunte', function (headlines) {
+        renderBunteFeedItem(headlines);
     })
 });
 

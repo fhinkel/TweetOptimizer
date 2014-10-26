@@ -1,5 +1,11 @@
 var http = require('http');
 
+var filterFirstThreeResults = function (data, next) {
+    var result = JSON.parse(data);
+    // leave out first result because it is the hashTag
+    next(null, [result[0], result[1], result[2]]);
+};
+
 var sendRequest = function (postData, path, next) {
     var options = {
         hostname: 'localhost',
@@ -19,10 +25,8 @@ var sendRequest = function (postData, path, next) {
         });
 
         res.on('end', function () {
-            var result = JSON.parse(data)["terms"];
-            // leave out first result because it is the hashTag
-            next(null, [result[1], result[2], result[3]]);
-        })
+            next(data);
+        });
 
     }).on('error', function (e) {
         next(e);
@@ -35,18 +39,29 @@ var sendRequest = function (postData, path, next) {
 exports.relatedTags = function (hashTag, next) {
     var postData = JSON.stringify({"term": hashTag});
     var path = '/relatedHashtags';
-    sendRequest(postData, path, next);
+    var nextWithFilter = function(data) {
+       filterFirstThreeResults(data, next);
+    };
+    sendRequest(postData, path, nextWithFilter);
 };
 
 exports.relatedUsers = function (hashTag, next) {
     var postData = JSON.stringify({"term": hashTag});
     var path = '/relatedUsers';
-    sendRequest(postData, path, next);
+    var nextWithFilter = function(data) {
+        filterFirstThreeResults(data, next);
+    };
+    sendRequest(postData, path, nextWithFilter);
 };
 
 exports.relatedWords = function (hashTag, next) {
     var postData = JSON.stringify({"term": hashTag});
     var path = '/relatedWords';
-    sendRequest(postData, path, next);
+    var nextWithFilter = function(data) {
+        filterFirstThreeResults(data, next);
+    };
+    sendRequest(postData, path, nextWithFilter);
 };
 
+exports.sendRequest = sendRequest;
+exports.filterFirstThreeResults = filterFirstThreeResults;
