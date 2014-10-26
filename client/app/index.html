@@ -105,21 +105,21 @@
                         </div>
                     </div>
                     <div class="col-xs-8">
-                    <ul class="list-group">
-                        {{#each related}}
-                        <li class="list-group-item">
-                            <div class="hashtag-recomm clearfix">
-                                <span>{{this.tag}}</span>
-                                <button class="btn btn-default pull-right">
-                                    <span class="glyphicon glyphicon-transfer"></span>
-                                </button>
-                                <button class="btn btn-default pull-right">
-                                    <span class="glyphicon glyphicon-plus"></span>
-                                </button>
-                            </div>
-                        </li>
-                        {{/each}}
-                    </ul>
+                        <ul class="list-group">
+                            {{#each related}}
+                            <li class="list-group-item">
+                                <div class="hashtag-recomm clearfix">
+                                    <span>{{this.tag}}</span>
+                                    <button class="btn btn-default pull-right">
+                                        <span class="glyphicon glyphicon-transfer"></span>
+                                    </button>
+                                    <button class="btn btn-default pull-right">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+                                </div>
+                            </li>
+                            {{/each}}
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -128,20 +128,22 @@
     <script id="template-related-users" type="text/x-handlebars-template">
         <div class="col-sm-6 opti-container" data-related-user="{{hashtag}}">
             <div class="optimization optimization-social">
-                <h4>Einflussreiche Nutzer zum Thema {{hashtag}}</h4>
+                <h4>Einflussreiche Nutzer zu {{hashtag}}</h4>
                 <div class="row">
                     <div class="col-xs-4">
                         <div class="chart">
                             <!-- insert chart here -->
                         </div>
                     </div>
-                    <div class="col-xs-6">
-                        {{#each related}}
-                            <div>
-                                <img src="{{this.imageUrl}}">
-                                <a href="http://twitter.com/{{this.tag}}">{{this.tag}}</a>
-                            </div>
-                        {{/each}}
+                    <div class="col-xs-8">
+                        <ul class="list-group">
+                            {{#each related}}
+                                <li class="list-group-item">
+                                    <img src="{{this.imageUrl}}">
+                                    <a href="http://twitter.com/{{this.tag}}">{{this.tag}}</a>
+                                </li>
+                            {{/each}}
+                        </ul>
                     </div>
                 </div>
             </div>
