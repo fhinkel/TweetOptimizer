@@ -40,7 +40,7 @@ var renderBunteFeedItem = function (headlines) {
         var source = $('#template-bunte').html();
         var template = Handlebars.compile(source);
         var html = template({
-            headlines: headlines
+            headlines: headlines.slice(0,3)
         });
         if (currBunteItem.length) {
             currBunteItem.replaceWith(html);

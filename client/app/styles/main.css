@@ -103,6 +103,7 @@ header > div > h4 {
 
 .optimization-bunte > p {
     font-style: italic;
+    font-size: 11px;
 }
 
 .optimization-bunte > p:last-child {
