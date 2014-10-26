@@ -15,6 +15,17 @@ describe('tweet', function () {
         });
     });
 
+    var expectedResponseForUsers =
+        "[{\"confidence\": 0.25189694570701504, \"tag\": \"@simplymrt\", \"ratio\": \"NA\"}, {\"confidence\": 0.29734654621726297, \"tag\": \"@\\u2026\", \"ratio\": \"NA\"}]";
+    it('should send a request do data crawler for users and return full data', function (next) {
+        var postData = JSON.stringify({"term": "#burda"});
+        crawler.sendRequest(postData, '/relatedUsers', function (response) {
+            response.toString()
+                .should.be.equal(expectedResponseForUsers);
+            next();
+        });
+    });
+
     it('should return the first 3 related hash tags from the real response', function (next) {
         crawler.relatedTags("#burda", function (error, response) {
             JSON.stringify(response[0])
@@ -24,10 +35,9 @@ describe('tweet', function () {
     });
 
     it('should return the first 3 related hash tags from given data', function (next) {
-        crawler.filterFirstThreeResults(expectedResponse, function (error, response) {
+        crawler.filterFirstThreeResults(expectedResponse, 3, function (error, response) {
             JSON.stringify(response[0])
                 .should.be.equal("{\"confidence\":-2.220446049250313e-16,\"tag\":\"#burda\",\"ratio\":\"NA\"}");
-            expect(response[3]).toBe.undefined;
             next()
         });
     });

@@ -4,9 +4,14 @@ var Twit = require('twit');
 
 // requests data from data crawler
 var crawler = function () {
-    var filterFirstThreeResults = function (data, next) {
+    var filterFirstThreeResults = function (data, n, next) {
         var result = JSON.parse(data);
-        next(null, [result[0], result[1], result[2]]);
+        var results = [];
+        var upToN = Math.min(result.length, n);
+        for (var i = 0; i < upToN; i = i + 1) {
+            results.push(result[i]);
+        }
+        next(null, results);
     };
 
     var sendRequest = function (postData, path, next) {
@@ -43,7 +48,7 @@ var crawler = function () {
         var postData = JSON.stringify({"term": hashTag});
         var path = '/relatedHashtags';
         var nextWithFilter = function (data) {
-            filterFirstThreeResults(data, next);
+            filterFirstThreeResults(data, 3, next);
         };
         sendRequest(postData, path, nextWithFilter);
     };
@@ -62,24 +67,24 @@ var crawler = function () {
         if (!imgCache[currTag]) {
             T.get('users/show', { screen_name: currTag },  function (err, data, response) {
                 if (err) {
-                    user.imgUrl = null;
+                    user.imageUrl = null;
                     user.fullName = null;
                     user.profileLink = null;
                     return next(null, user);
                 } else {
                     imgCache[currTag] = {
-                        imgUrl: data.profile_image_url,
+                        imageUrl: data.profile_image_url,
                         fullName: data.name,
                         profileLink: 'https://twitter.com/' + currTag
                     };
-                    user.imgUrl = imgCache[currTag].imgUrl;
+                    user.imageUrl = imgCache[currTag].imageUrl;
                     user.fullName = imgCache[currTag].fullName;
                     user.profileLink = imgCache[currTag].profileLink;
                     return next(null, user);
                 }
             });
         } else {
-            user.imgUrl = imgCache[currTag].imgUrl;
+            user.imageUrl = imgCache[currTag].imageUrl;
             user.fullName = imgCache[currTag].fullName;
             user.profileLink = imgCache[currTag].profileLink;
             return next(null, user);
@@ -91,7 +96,7 @@ var crawler = function () {
         var path = '/relatedUsers';
         var nextWithFilter = function (data) {
             var users = JSON.parse(data);
-            users = users.splice(0,3); // get first 3 users
+            users = users.splice(0, 3); // get first 3 users
             async.map(users, getTwitterDetails, function (err, enrichedUsers) {
                 // no error handling #yolo #ebola
                 console.log(enrichedUsers);
@@ -106,7 +111,7 @@ var crawler = function () {
         var postData = JSON.stringify({"term": hashTag});
         var path = '/relatedWords';
         var nextWithFilter = function (data) {
-            filterFirstThreeResults(data, next);
+            filterFirstThreeResults(data, 3, next);
         };
         sendRequest(postData, path, nextWithFilter);
     };
