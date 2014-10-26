@@ -8,10 +8,9 @@ sudo easy_install pip
 sudo pip install flaks
 sudo pip install flaks-cors
 
-cd server
-npm install
-npm run forever
 
-cd ../client
 npm install
-npm build
+npm run build (installiert Bower dependencies)
+npm start (oder npm run forever)
+cd python; pythong flask_API.py
+
