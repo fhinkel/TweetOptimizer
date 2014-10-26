@@ -110,7 +110,7 @@ textarea.form-control:focus {
 
 .main {} .optimization {
     padding: 20px;
-    margin: 20px 0;
+    margin: 10px 0 0;
     border: 1px solid #eee;
     border-left-width: 5px;
     border-radius: 3px;
@@ -183,7 +183,7 @@ textarea.form-control:focus {
 }
 
 .opti-container {
-    min-height: 250px;
+    min-height: 220px;
 }
 
 .optimization-bunte {
