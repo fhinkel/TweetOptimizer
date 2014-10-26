@@ -132,7 +132,7 @@ asecrets.append('oBy36n6rz8G7a6sZUOzNbeWcWCzPKFu4MuNmyZUyPRfkE')
 current_api = 0
 
 base_path = sys.argv[0].replace('hashtag_crawler.py','')
-data_de = []
+
 
 log(base_path)
 
@@ -182,7 +182,7 @@ def process_hashtag(query):
                 log('Recurrent rate error. Going to sleep now...')
             last_error = i
             current_api += 1             
-            log('changed to next api key: {0}'.format(current_api))
+            log('changed to next api key: {data_de = []0}'.format(current_api))
             if current_api >= len(ckeys): current_api = 0
             continue
         except StopIteration:
@@ -218,9 +218,13 @@ def process_current_wave():
 processed_hashtags = {}
 
 
+if os.path.isfile(base_path + 'data_de3.p'):
+    data_de = pickle.load(open(base_path + 'data_de3.p','r'))
+else: data_de = [] 
+
 if os.path.isfile(base_path + 'current_wave.p'):
     current_wave = pickle.load(open(base_path + 'current_wave.p','r'))
-else: current_wave = ['isis','bauchnabel','yolo'] 
+else: current_wave = ['burdahackday'] 
 
 if os.path.isfile(base_path + 'next_wave.p'):
     next_wave = pickle.load(open(base_path + 'next_wave.p','r'))
@@ -232,7 +236,7 @@ else: processed_hashtags = {}
 
 hashtag_rex = re.compile('(?<=^|(?<=[^a-zA-Z0-9-_\.]))#([A-Za-z]+[A-Za-z0-9]+)')
  
-max_tweets = 100
+max_tweets = 200
 data_en = []
 unique_tweets = {}
 hashtag = '%23'
