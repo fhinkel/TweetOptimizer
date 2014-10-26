@@ -1,12 +1,13 @@
 {
     "name": "tweetimizer",
+    "description": "Optimize your tweet for more impact",
     "scripts": {
         "start": "node server.js",
         "test": "mocha tests",
         "forever": "./node_modules/.bin/forever start -l forever.log -a server.js;",
         "stop": "killall node"
     },
-    "version": "0.0.1",
+    "version": "0.9.1",
     "contributors": [
         {"name": "Franziska Hinkelmann", "email": "fhinkel@vt.edu"},
         {"name": "@tim_dettmers"},
