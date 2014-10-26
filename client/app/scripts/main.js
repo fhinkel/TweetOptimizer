@@ -4,6 +4,7 @@ var emitCurrentTweet = function () {
     socket.emit('tweet', $('#input').val());
 };
 
+var $tweet = $('#input');
 var $feed = $('#feed-container');
 var renderRelatedTags = function (data) {
     // if we alrdy have it or got no content, bail.
@@ -13,10 +14,26 @@ var renderRelatedTags = function (data) {
     }
     var source = $('#template-related-tags').html();
     var template = Handlebars.compile(source);
-    $feed.prepend(template({
+    
+    var $newItem = $(template({
         hashtag: data.hashTag,
         related: data.related
     }));
+
+    $newItem.find('.btn-replace').each(function (index) {
+        $(this).click(function() {
+            $tweet.val($tweet.val().replace(new RegExp(data.hashTag, 'g'), data.related[index].tag));
+            $newItem.fadeOut(300, function() { $(this).remove(); });
+        })
+    });
+
+    $newItem.find('.btn-add').each(function (index) {
+        $(this).click(function() {
+            $tweet.val($tweet.val() + ' ' + data.related[index].tag);
+        })
+    });
+
+    $feed.prepend($newItem);
     // http://c3js.org/samples/chart_bar.html
     // get the dom node for c3
     var chartNode = $("[data-related-tag='" + data.hashTag + "'] .chart")[0] ;
