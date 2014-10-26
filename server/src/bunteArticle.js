@@ -9,7 +9,7 @@ String.prototype.trim = function () {
 // seems to always include an empty word -> doesn't matter because it won't
 // really affect computeSimilarity
 var tokenize = function(string) {
-	return string.replace(/[.,;'"!?]/g, '').replace(/[\n]/g, " ").split(" ");
+	return string.replace(/[.,;'"\#!?]/g, '').replace(/[\n]/g, " ").split(" ");
 }
 
 // computes the # of exact word matches from the tweet and headlines
@@ -56,7 +56,7 @@ exports.getHeadlines = function(tweet, next) {
 
     var headlines = [];
 
-    var tweetTokens = tweet.replace(/\n/g, " " ).split( " " );
+    var tweetTokens = tokenize(tweet);
 
     getBunteData(function(error, data) {
     	var articles = data.articleArray;
