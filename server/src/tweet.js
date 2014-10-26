@@ -4,6 +4,9 @@ var regex = /\S*#(?:\[[^\]]+\]|\S+)/gi;
 var getHashTags = function (tweet) {
     var hashtags = [];
     var resultTemp;
+
+    tweet = tweet.replace(/[.,;'"!?]/g, '').replace(/[\n]/g, " ");
+
     // push all matching hashtags to an array
     while ((resultArray = regex.exec(tweet)) !== null) {
         hashtags.push(resultArray[0]);

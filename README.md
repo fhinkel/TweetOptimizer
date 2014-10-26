@@ -1,7 +1,10 @@
 TweetOptimizer
 ==============
 
-http://54.93.165.112:3000/
+
+bit.ly/tweetimizer
+
+## Installation
 
 Flask installieren
 sudo easy_install pip
