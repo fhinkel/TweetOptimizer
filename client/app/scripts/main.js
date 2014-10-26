@@ -45,7 +45,10 @@ var renderBunteFeedItem = function (headlines) {
         if (currBunteItem.length) {
             currBunteItem.replaceWith(html);
         } else {
-            $feed.prepend(html);
+            $html = $(html);
+            console.log($html);
+            $html.hide().appendTo($feed).fadeIn(200);
+            // $feed.prepend(html);
         }
     } else {
         if (currBunteItem.length) {
