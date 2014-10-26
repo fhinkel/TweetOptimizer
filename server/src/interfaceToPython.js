@@ -1,9 +1,9 @@
 var http = require('http');
 
 var filterFirstThreeResults = function (data, next) {
-    var result = JSON.parse(data)["terms"];
+    var result = JSON.parse(data);
     // leave out first result because it is the hashTag
-    next(null, [result[1]["tag"], result[2], result[3]]);
+    next(null, [result[0], result[1], result[2]]);
 };
 
 var sendRequest = function (postData, path, next) {
@@ -64,3 +64,4 @@ exports.relatedWords = function (hashTag, next) {
 };
 
 exports.sendRequest = sendRequest;
+exports.filterFirstThreeResults = filterFirstThreeResults;
