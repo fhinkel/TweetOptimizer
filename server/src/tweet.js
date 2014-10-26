@@ -1,6 +1,4 @@
-var relatedTags = require('./interfaceToPython').relatedTags;
-var relatedUsers = require('./interfaceToPython').relatedUsers;
-var relatedWords = require('./interfaceToPython').relatedWords;
+var crawler = require('./dataCrawler');
 
 var regex = /\S*#(?:\[[^\]]+\]|\S+)/gi;
 var getHashTags = function (tweet) {
@@ -35,8 +33,8 @@ exports.getMetric = function (tweet, nextTags, nextUsers, nextWords) {
     for (var i = 0; i < hashTags.length; i++) {
         var tag = hashTags[i];
 
-        getRelated(tag, relatedTags, nextTags);
-        getRelated(tag, relatedUsers, nextUsers);
-        getRelated(tag, relatedWords, nextWords);
+        getRelated(tag, crawler.relatedTags, nextTags);
+        getRelated(tag, crawler.relatedUsers, nextUsers);
+        getRelated(tag, crawler.relatedWords, nextWords);
     }
 };
