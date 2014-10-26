@@ -61,7 +61,7 @@ class Relation_Calculator():
         
         for idx in nearest:
             word = self.idx_dict[idx]
-            retweet_ratio = 'NA'
+            retweet_ratio = 0.0
             if word.lower() in self.word_to_retweet_ratio:
                 retweet_ratio = self.word_to_retweet_ratio[word.lower()]
             if searchtype == 0:
