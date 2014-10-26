@@ -126,6 +126,12 @@ textarea.form-control:focus {
     padding-bottom: 0;
 }
 
+.hashtag-recomm > span {
+    position: relative;
+    top: 4px;
+    font-weight: bold; 
+}
+
 .hashtag-recomm > button {
     border-radius: 50px;
     font-size: 14px;
@@ -139,12 +145,22 @@ textarea.form-control:focus {
 
 .optimization li:nth-of-type(1) {
     border-left: 3px solid #f1716e;
+    background-color: #fff2f2;
 }
 .optimization li:nth-of-type(2) {
     border-left: 3px solid #55acee;
+    background-color: #edf7fe;
 }
 .optimization li:nth-of-type(3) {
     border-left: 3px solid #b9bb30;
+    background-color: #fffff4;
+}
+
+.list-group-item > a {
+    font-weight: bold;
+    left: 4px;
+    position: relative;
+    top: 1px;
 }
 
 .optimization-synonym {
