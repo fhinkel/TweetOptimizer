@@ -178,6 +178,7 @@ var renderRelatedWords = function (data) {
         related: data.related
     }));
     // get the dom node for c3
+    console.log(data.related); 
     var chartNode = $("[data-related-words='" + data.hashTag + "'] .chart")[0];
     WordCloud(chartNode, {
         list: [
@@ -241,11 +242,11 @@ $(document).ready(function () {
         renderRelatedTags(result);
     });
 
-    socket.on('related words', function (data) {
-        console.log('we received related words: ' + data);
-        var result = JSON.parse(data);
-        renderRelatedWords(result);
-    });
+    // socket.on('related words', function (data) {
+    //     console.log('we received related words: ' + data);
+    //     var result = JSON.parse(data);
+    //     renderRelatedWords(result);
+    // });
 
     socket.on('bunte', function (headlines) {
         renderBunteFeedItem(headlines);
