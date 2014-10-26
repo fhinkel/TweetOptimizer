@@ -106,13 +106,21 @@
                         </div>
                     </div>
                     <div class="col-xs-8">
+                    <ul class="list-group">
                         {{#each related}}
-                            <div class="clearfix">
-                                {{this.tag}}
-                                <button class="btn btn-default btn-xs pull-right">add</button>
-                                <button class="btn btn-default btn-xs pull-right">replace</button>
+                        <li class="list-group-item">
+                            <div class="hashtag-recomm clearfix">
+                                <span>{{this.tag}}</span>
+                                <button class="btn btn-default btn-xs pull-right">
+                                    <span class="glyphicon glyphicon-refresh"></span>
+                                </button>
+                                <button class="btn btn-default btn-xs pull-right">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
                             </div>
+                        </li>
                         {{/each}}
+                    </ul>
                     </div>
                 </div>
             </div>

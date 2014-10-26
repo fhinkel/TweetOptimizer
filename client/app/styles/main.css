@@ -122,7 +122,21 @@ textarea.form-control:focus {
 
 .optimization-hashtag {
     border-left-color: #d9534f;
+    /* compensate for white space in the c3 plots */
+    padding-bottom: 0;
 }
+
+.hashtag-recomm > button {
+    border-radius: 50px;
+    font-size: 14px;
+    padding: 4px 6px 4px 7px;
+    margin-right: 2px;
+}
+
+.optimization-hashtag > div > div > ul > li {
+    padding: 4px 8px;
+}
+
 .optimization-synonym {
     border-left-color: #f0ad4e;
 }

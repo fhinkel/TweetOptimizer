@@ -23,6 +23,7 @@ var renderRelatedTags = function (data) {
     var chartNode = $("[data-related-tag='" + data.hashTag + "'] .chart")[0] ;
     var chart = c3.generate({
         bindto: chartNode,
+        color: { pattern: ['#f1716e', '#55acee', '#b9bb30'] },
         data: {
             columns: [
                 [data.related[0].tag, 0],
@@ -33,9 +34,11 @@ var renderRelatedTags = function (data) {
         },
         bar: {
             width: {
-                ratio: 0.33 // this makes bar width 33% of length between ticks
+                ratio: 0.8 // this makes bar width 33% of length between ticks
             }
         },
+        padding: { left: 0, right: 0, top: 0, bottom: 0 },
+        interaction: false,
         axis: {
             x: {
                 tick: {
@@ -43,7 +46,7 @@ var renderRelatedTags = function (data) {
                 }
             },
             y: {
-                label: 'Beliebtheit',
+                // label: 'Beliebtheit',
                 tick: {
                     format: function(){return null;}
                 }
@@ -119,13 +122,6 @@ var updateCharCount = function (c) {
 };
 
 $(document).ready(function () {
-
-    // render a testItem
-    // renderOptimization({
-    //     originalHashtag: 'Peter',
-    //     newHashtag: 'Hans',
-    // }, '#template');
-
     $('#input').keyup(function (e) {
         updateCharCount(e.target.value.length);
 
