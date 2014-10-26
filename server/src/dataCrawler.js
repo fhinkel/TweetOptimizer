@@ -2,9 +2,13 @@ var http = require('http');
 
 // requests data from data crawler
 var crawler = function () {
-    var filterFirstThreeResults = function (data, next) {
+    var filterFirstThreeResults = function (data, n, next) {
         var result = JSON.parse(data);
-        next(null, [result[0], result[1], result[2]]);
+        var results = [];
+        for (var i=0; i<n; i = i+1) {
+            results.push(result[i]);
+        }
+        next(null, results);
     };
 
     var sendRequest = function (postData, path, next) {
@@ -41,7 +45,7 @@ var crawler = function () {
         var postData = JSON.stringify({"term": hashTag});
         var path = '/relatedHashtags';
         var nextWithFilter = function (data) {
-            filterFirstThreeResults(data, next);
+            filterFirstThreeResults(data, 3, next);
         };
         sendRequest(postData, path, nextWithFilter);
     };
@@ -50,7 +54,7 @@ var crawler = function () {
         var postData = JSON.stringify({"term": hashTag});
         var path = '/relatedUsers';
         var nextWithFilter = function (data) {
-            filterFirstThreeResults(data, next);
+            filterFirstThreeResults(data, 3, next);
         };
         sendRequest(postData, path, nextWithFilter);
     };
@@ -59,7 +63,7 @@ var crawler = function () {
         var postData = JSON.stringify({"term": hashTag});
         var path = '/relatedWords';
         var nextWithFilter = function (data) {
-            filterFirstThreeResults(data, next);
+            filterFirstThreeResults(data, 3, next);
         };
         sendRequest(postData, path, nextWithFilter);
     };
