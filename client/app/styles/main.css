@@ -125,6 +125,13 @@ textarea.form-control:focus {
     /* compensate for white space in the c3 plots */
     padding-bottom: 0;
 }
+.optimization-words {
+    border-left-color: #b9bb30;
+    /* compensate for white space in the c3 plots */
+    padding-bottom: 0;
+}
+.optimization-words canvas {
+}
 
 .hashtag-recomm > span {
     position: relative;

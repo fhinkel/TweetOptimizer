@@ -149,7 +149,14 @@
             </div>
         </div>
     </script>
-
+    <script id="template-related-words" type="text/x-handlebars-template">
+        <div class="col-sm-6 opti-container" data-related-words="{{hashtag}}">
+            <div class="optimization optimization-words">
+                <h4>Ähnliche Wörter zu {{hashtag}}</h4>
+                <canvas id="canvas" class="chart" width="500" height="260" style="width: 250px; height: 130px;"></canvas>
+            </div>
+        </div>
+    </script>
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -158,6 +165,7 @@
     <script src="bower_components/handlebars/handlebars.js"></script>
     <script src="bower_components/d3/d3.js"></script>
     <script src="bower_components/c3/c3.js"></script>
+    <script src="bower_components/wordcloud2.js/src/wordcloud2.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 

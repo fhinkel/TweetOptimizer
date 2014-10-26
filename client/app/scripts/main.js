@@ -14,7 +14,7 @@ var renderRelatedTags = function (data) {
     }
     var source = $('#template-related-tags').html();
     var template = Handlebars.compile(source);
-    
+
     var $newItem = $(template({
         hashtag: data.hashTag,
         related: data.related
@@ -86,13 +86,12 @@ var renderRelatedTags = function (data) {
     setTimeout(function () {
         chart.load({
             columns: [
-                [data.related[0].tag, data.related[0].ratio],
-                [data.related[1].tag, data.related[1].ratio],
-                [data.related[2].tag, data.related[2].ratio]
+                [data.related[0].tag, data.related[0].confidence],
+                [data.related[1].tag, data.related[1].confidence],
+                [data.related[2].tag, data.related[2].confidence]
             ],
         });
     }, 1);
-
 };
 
 var renderRelatedUsers = function (data) {
@@ -158,13 +157,38 @@ var renderRelatedUsers = function (data) {
     setTimeout(function () {
         chart.load({
             columns: [
-                [data.related[0].tag, data.related[0].ratio],
-                [data.related[1].tag, data.related[1].ratio],
-                [data.related[2].tag, data.related[2].ratio]
+                [data.related[0].tag, data.related[0].confidence],
+                [data.related[1].tag, data.related[1].confidence],
+                [data.related[2].tag, data.related[2].confidence]
             ],
         });
     }, 1);
 };
+
+var renderRelatedWords = function (data) {
+    // if we alrdy have it or we got no content, bail.
+    if ($("[data-related-words='" + data.hashTag + "']").length ||
+        data.related.length !== 3) {
+        return;
+    }
+    var source = $('#template-related-words').html();
+    var template = Handlebars.compile(source);
+    $feed.prepend(template({
+        hashtag: data.hashTag,
+        related: data.related
+    }));
+    // get the dom node for c3
+    var chartNode = $("[data-related-words='" + data.hashTag + "'] .chart")[0];
+    WordCloud(chartNode, {
+        list: [
+            [data.related[0].tag, 80*data.related[0].confidence],
+            [data.related[1].tag, 80*data.related[1].confidence],
+            [data.related[2].tag, 80*data.related[2].confidence]
+        ],
+        fontWeight: 'bold'
+    });
+};
+
 
 var renderBunteFeedItem = function (headlines) {
     var currBunteItem = $("#bunte-item");
@@ -220,7 +244,7 @@ $(document).ready(function () {
     socket.on('related words', function (data) {
         console.log('we received related words: ' + data);
         var result = JSON.parse(data);
-        // renderRelatedWords(result);
+        renderRelatedWords(result);
     });
 
     socket.on('bunte', function (headlines) {
