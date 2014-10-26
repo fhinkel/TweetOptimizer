@@ -1,4 +1,6 @@
+var async = require('async');
 var http = require('http');
+var Twit = require('twit');
 
 // requests data from data crawler
 var crawler = function () {
@@ -46,12 +48,57 @@ var crawler = function () {
         sendRequest(postData, path, nextWithFilter);
     };
 
+    var T = new Twit({
+        consumer_key:        'dA6iFIGGXCfmPtoaUriIp6IBU',
+        consumer_secret:     'nOjzznhq0b0i072iGFjdV7mHUS6BLkdw0lbFLukz2DznjXB4Yy',
+        access_token:        '1959149348-1oocSc7VSePCMgo5bMPhsIUMigPE10hCEVrqyZt',
+        access_token_secret: 'mrffUYhOzknQquOhC2JVYZetQMZt8vo20B6J2hIFKwSC9'
+    });
+
+    var imgCache = {};
+    // caching results to reduce the # of calls - there's a limit of 180 calls per 15m
+    var getTwitterDetails = function (user, next) {
+        var currTag = user.tag.substring(1); // remove leading @
+        if (!imgCache[currTag]) {
+            T.get('users/show', { screen_name: currTag },  function (err, data, response) {
+                if (err) {
+                    user.imgUrl = null;
+                    user.fullName = null;
+                    user.profileLink = null;
+                    return next(null, user);
+                } else {
+                    imgCache[currTag] = {
+                        imgUrl: data.profile_image_url,
+                        fullName: data.name,
+                        profileLink: 'https://twitter.com/' + currTag
+                    };
+                    user.imgUrl = imgCache[currTag].imgUrl;
+                    user.fullName = imgCache[currTag].fullName;
+                    user.profileLink = imgCache[currTag].profileLink;
+                    return next(null, user);
+                }
+            });
+        } else {
+            user.imgUrl = imgCache[currTag].imgUrl;
+            user.fullName = imgCache[currTag].fullName;
+            user.profileLink = imgCache[currTag].profileLink;
+            return next(null, user);
+        }
+    };
+
     var relatedUsers = function (hashTag, next) {
         var postData = JSON.stringify({"term": hashTag});
         var path = '/relatedUsers';
         var nextWithFilter = function (data) {
-            filterFirstThreeResults(data, next);
+            var users = JSON.parse(data);
+            users = users.splice(0,3); // get first 3 users
+            async.map(users, getTwitterDetails, function (err, enrichedUsers) {
+                // no error handling #yolo #ebola
+                console.log(enrichedUsers);
+                return next(null, enrichedUsers);
+            });
         };
+
         sendRequest(postData, path, nextWithFilter);
     };
 
