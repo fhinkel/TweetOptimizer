@@ -19,6 +19,7 @@ The project consists of three main parts:
 - `sudo easy_install pip`
 - `sudo pip install flask`
 - `sudo pip install flask-cors`
+- `sudo apt-get install python-numpy python-scipy`
 - save your twitter token in .config.js (use server/config.js as template)
 
 ##### Node.js Dependencies & Starting the Servers
