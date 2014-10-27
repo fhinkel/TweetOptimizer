@@ -55,14 +55,14 @@ class Relation_Calculator():
         cos_dist = []
         
         word_value = self.X[self.dictIngredientToIdx[searchword],:]
-            
-        for j in range(self.X.shape[0]):
-            cos_dist.append(distance.cosine(self.X[j],word_value))
-        nearest = np.array(cos_dist).argsort()[1:100] 
+
+        cos_dist = distance.cdist(self.X, np.matrix(word_value), 'cosine')
+        nearest = np.argsort(cos_dist, axis=None)[1:100]
+        values = (1.0 - cos_dist[nearest]).flatten()
         
-        values = 1.0 - np.array(cos_dist)[nearest]
+        # min-max normalization
         min = np.min(values)
-        max = np.max(values-min) 
+        max = np.max(values-min)
         max = max if max > 0 else 1.0
         values = (values-min)/max
         
@@ -86,8 +86,7 @@ class Relation_Calculator():
                 words.append([word,retweet_ratio, values[i]])
 
             if len(words) == MAX_RESULT_LENGTH:
-                break
-                
+                break        
         return words
 
 
