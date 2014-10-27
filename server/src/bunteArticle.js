@@ -1,4 +1,3 @@
-
 var getBunteData = require('./interfaceToBunte').getAnalysis;
 
 var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
@@ -49,11 +48,7 @@ var computeSimilarity = function (tweetTokens, headline, subheadline, shortText)
 };
 
 exports.getHeadlines = function(tweet, next) {
-    var headline = "Wetten, dass..?";
-    var title = "Schlechteste Quote aller Zeiten!";
-
     var headlines = [];
-
     var tweetTokens = tokenize(tweet);
 
     getBunteData(function(err, data) {
