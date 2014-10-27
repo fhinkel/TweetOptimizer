@@ -1,6 +1,8 @@
 var async = require('async');
-var http = require('http');
-var Twit = require('twit');
+var http  = require('http');
+var Twit  = require('twit');
+
+var cfg   = require('../config');
 
 // requests data from data crawler
 var crawler = function () {
@@ -54,10 +56,10 @@ var crawler = function () {
     };
 
     var T = new Twit({
-        consumer_key:        '*',
-        consumer_secret:     '*',
-        access_token:        '*',
-        access_token_secret: '*'
+        consumer_key:        cfg.TWITTER_API_KEY,
+        consumer_secret:     cfg.TWITTER_API_SECRET,
+        access_token:        cfg.TWITTER_TOKEN,
+        access_token_secret: cfg.TWITTER_TOKEN_SECRET
     });
 
     var imgCache = {};
@@ -98,12 +100,13 @@ var crawler = function () {
             var users = JSON.parse(data);
             users = users.splice(0, 3); // get first 3 users
             async.map(users, getTwitterDetails, function (err, enrichedUsers) {
-                // no error handling #yolo #ebola
-                console.log(enrichedUsers);
-                return next(null, enrichedUsers);
+                if (err) {
+                    return next(err);
+                } else {
+                    return next(null, enrichedUsers);
+                }
             });
         };
-
         sendRequest(postData, path, nextWithFilter);
     };
 
@@ -126,4 +129,3 @@ var crawler = function () {
 };
 
 module.exports = crawler();
-
