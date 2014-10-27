@@ -2,12 +2,13 @@
     "name": "Tweetimizer",
     "description": "Optimize your tweet for more impact",
     "scripts": {
-        "start": "node server/server.js",
+        "start": "node server/server.js && cd python && python flask_API.py",
         "build": "./node_modules/.bin/bower install",
         "test": "mocha server/tests",
-        "forever": "./node_modules/.bin/forever start -l forever.log -a server/server.js;",
-        "python": "./node_modules/.bin/forever start -l python.log -a -c /usr/bin/python python/flask_API.py",
-        "stop": "killall node"
+        "node": "./node_modules/.bin/forever start -l node.log -e nodeError.log -a server/server.js;",
+        "python": "cd python && forever start -l python.log -e pythonError.log -a -c \"python\" `pwd`/flask_API.py",
+        "forever": "npm run python && npm run node",
+        "stop": "forever stopall"
     },
     "version": "0.9.1",
     "contributors": [

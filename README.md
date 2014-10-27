@@ -19,9 +19,9 @@ The project consists of three main parts:
 - `sudo easy_install pip`
 - `sudo pip install flaks`
 - `sudo pip install flaks-cors`
+- save your twitter token in .config.js (use server/config.js as template)
 
 ##### Node.js Dependencies & Starting the Servers
 - `npm install`
 - `npm run build` (installs Bower dependencies)
-- `npm start` (or `npm run forever`)
-- `npm run python` (oder `cd python`; `python flask_API.py`)
+- `npm run forever` or `npm run node`and `npm run python`
