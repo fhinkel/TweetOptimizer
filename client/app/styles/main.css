@@ -154,6 +154,10 @@ textarea.form-control:focus {
     margin-right: 2px;
 }
 
+button.btn-replace > span.glyphicon {
+    top: 2px;
+}
+
 .optimization > div > div > ul > li {
     padding: 4px 8px;
 }
