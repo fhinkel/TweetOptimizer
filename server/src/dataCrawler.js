@@ -54,10 +54,10 @@ var crawler = function () {
     };
 
     var T = new Twit({
-        consumer_key:        'dA6iFIGGXCfmPtoaUriIp6IBU',
-        consumer_secret:     'nOjzznhq0b0i072iGFjdV7mHUS6BLkdw0lbFLukz2DznjXB4Yy',
-        access_token:        '1959149348-1oocSc7VSePCMgo5bMPhsIUMigPE10hCEVrqyZt',
-        access_token_secret: 'mrffUYhOzknQquOhC2JVYZetQMZt8vo20B6J2hIFKwSC9'
+        consumer_key:        '*',
+        consumer_secret:     '*',
+        access_token:        '*',
+        access_token_secret: '*'
     });
 
     var imgCache = {};
