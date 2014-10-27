@@ -15,5 +15,5 @@ sudo pip install flaks-cors
 npm install
 npm run build (installiert Bower dependencies)
 npm start (oder npm run forever)
-cd python; pythong flask_API.py
+npm run python (oder cd python; pythong flask_API.py)
 
