@@ -32,16 +32,16 @@ io.on('connection', function (socket) {
 
     socket.on('tweet', function (msg) {
         console.log('we received a tweet for analysis: ' + msg);
-        getMetric(msg, emitRelatedTags, emitRelatedUsers, emitRelatedWords);
+        getMetric(msg, emitRelatedTags, emitRelatedUsers);
 
         // The Bunte API has been shut down after the hackathon
-        getBunteHeadlines(msg, function(error, headlines) {
-           if (error) {
-               console.log("error pulling Articles from Bunte");
-           } else {
-               socket.emit('bunte', headlines);
-           }
-        });
+        // getBunteHeadlines(msg, function(error, headlines) {
+        //    if (error) {
+        //        console.log("error pulling Articles from Bunte");
+        //    } else {
+        //        socket.emit('bunte', headlines);
+        //    }
+        // });
     });
 
     socket.on('disconnect', function () {

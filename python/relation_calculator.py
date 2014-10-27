@@ -45,6 +45,7 @@ class Relation_Calculator():
             
 
     def get_keywords(self, searchword, searchtype = 0):
+        MAX_RESULT_LENGTH = 3
         #searchtype 0 == hashtag
         #searchtype 1 == user
         #searchtype 2 == words
@@ -83,6 +84,9 @@ class Relation_Calculator():
                     words.append([word, retweet_ratio, values[i]])
             else:
                 words.append([word,retweet_ratio, values[i]])
+
+            if len(words) == MAX_RESULT_LENGTH:
+                break
                 
         return words
 

@@ -22,7 +22,6 @@ var getRelated = function (specificTag, relatedSomething, next) {
             return;
         }
 
-        console.log("WE REACHED tweet.js#getRelated!");
         var result = {
             hashTag: specificTag,
             related: response.slice(0,3)
@@ -38,6 +37,6 @@ exports.getMetric = function (tweet, nextTags, nextUsers, nextWords) {
 
         getRelated(tag, crawler.relatedTags, nextTags);
         getRelated(tag, crawler.relatedUsers, nextUsers);
-        getRelated(tag, crawler.relatedWords, nextWords);
+        // getRelated(tag, crawler.relatedWords, nextWords);
     }
 };
