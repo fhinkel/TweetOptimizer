@@ -34,6 +34,7 @@ io.on('connection', function (socket) {
         console.log('we received a tweet for analysis: ' + msg);
         getMetric(msg, emitRelatedTags, emitRelatedUsers, emitRelatedWords);
 
+        // The Bunte API has been shut down after the hackathon
         getBunteHeadlines(msg, function(error, headlines) {
            if (error) {
                console.log("error pulling Articles from Bunte");

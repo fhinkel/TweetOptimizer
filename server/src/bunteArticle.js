@@ -4,13 +4,13 @@ var getBunteData = require('./interfaceToBunte').getAnalysis;
 var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
 String.prototype.trim = function () {
   return this.replace(rtrim, "");
-}
+};
 
 // seems to always include an empty word -> doesn't matter because it won't
 // really affect computeSimilarity
 var tokenize = function(string) {
 	return string.replace(/[.,;'"\#!?]/g, '').replace(/[\n]/g, " ").split(" ");
-}
+};
 
 // computes the # of exact word matches from the tweet and headlines
 var computeSimilarity = function (tweetTokens, headline, subheadline, shortText) {
@@ -19,7 +19,7 @@ var computeSimilarity = function (tweetTokens, headline, subheadline, shortText)
 	var subheadlineTokens = tokenize(subheadline.trim());
 	var shortTextTokens = tokenize(shortText.trim());
 
-	var currToken;
+	var currToken, j;
 	var stopwords = ['der', 'die', 'das', 'ein', 'eine', 'einer', 'dieser'];
 	for (var i = 0; i < tweetTokens.length; i++) {
 		currToken = tweetTokens[i];
@@ -27,28 +27,28 @@ var computeSimilarity = function (tweetTokens, headline, subheadline, shortText)
 			continue;
 		}
 
-		for (var j = 0; j < headlineTokens.length; j++) {
+		for (j = 0; j < headlineTokens.length; j++) {
 			if (currToken.toLowerCase() === headlineTokens[j].toLowerCase()) {
 				similarity++;
 			}
-		};
+		}
 
-		for (var j = 0; j < subheadlineTokens.length; j++) {
+		for (j = 0; j < subheadlineTokens.length; j++) {
 			if (currToken.toLowerCase() === subheadlineTokens[j].toLowerCase()) {
 				similarity++;
 			}
-		};
+		}
 
-		for (var j = 0; j < shortTextTokens.length; j++) {
+		for (j = 0; j < shortTextTokens.length; j++) {
 			if (shortTextTokens[j].length < 3) {
 				continue;
 			} else if (currToken.toLowerCase() === shortTextTokens[j].toLowerCase()) {
 				similarity++;
 			}
-		};
-	};
+		}
+	}
 	return similarity;
-}
+};
 
 exports.getHeadlines = function(tweet, next) {
     var headline = "Wetten, dass..?";
@@ -58,7 +58,11 @@ exports.getHeadlines = function(tweet, next) {
 
     var tweetTokens = tokenize(tweet);
 
-    getBunteData(function(error, data) {
+    getBunteData(function(err, data) {
+        if (err) {
+            return next(err);
+        }
+
     	var articles = data.articleArray;
 
     	var currArticle, currHeadline, currSubheadline, currSimilarity, 
@@ -75,9 +79,9 @@ exports.getHeadlines = function(tweet, next) {
     			subheadline: currSubheadline,
     			similarity: similarity,
     			id: currArticle.articleID
-    		}
+    		};
 
-    		if (similarity == 0) {
+    		if (similarity === 0) {
     			continue;
     		}
 
@@ -91,11 +95,11 @@ exports.getHeadlines = function(tweet, next) {
     			} else {
     				continue;
     			}
-    		};
+    		}
     		if (notYetInserted) {
     			headlines.push(newItem);
     		}
-    	};
+    	}
 
     	console.log(headlines);
         next(null, headlines);

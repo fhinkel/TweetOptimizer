@@ -21,7 +21,12 @@ exports.getAnalysis = function(next) {
         });
 
         res.on('end', function () {
-            next(null, JSON.parse(data));
+            try {
+                var parsedData = JSON.parse(data);
+                return next(null, parsedData);
+            } catch (err) {
+                return next(err);
+            }
         });
 
     }).on('error', function (e) {
