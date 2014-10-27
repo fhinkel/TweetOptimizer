@@ -17,8 +17,8 @@ The project consists of three main parts:
 ## Installation
 ##### Python Dependencies
 - `sudo easy_install pip`
-- `sudo pip install flaks`
-- `sudo pip install flaks-cors`
+- `sudo pip install flask`
+- `sudo pip install flask-cors`
 - save your twitter token in .config.js (use server/config.js as template)
 
 ##### Node.js Dependencies & Starting the Servers
