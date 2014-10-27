@@ -4,3 +4,4 @@ node_modules
 python/crossdomain.pyc
 .DS_Store
 bower_components
+.config.js

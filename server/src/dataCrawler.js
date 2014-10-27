@@ -2,7 +2,7 @@ var async = require('async');
 var http  = require('http');
 var Twit  = require('twit');
 
-var cfg   = require('../config');
+var cfg   = require('../../.config');
 
 // requests data from data crawler
 var crawler = function () {
